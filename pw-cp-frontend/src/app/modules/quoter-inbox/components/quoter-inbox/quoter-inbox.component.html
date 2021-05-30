@@ -1,0 +1,209 @@
+<!-- Buscador -->
+<div class="container-search">
+    <div class="d-flex">
+        <div class="col-2 col-lg-2 d-lg-none d-flex align-items-center justify-content-center">
+            <button type="button" class="btn container-search__btn" (click)="refreshQuote()">
+                <img class="img-inbox" src="assets/icons/refresh_button.png" alt="refresh-button" />
+            </button>
+        </div>
+
+        <div class="col-lg-10 col-7">
+            <img src="assets/icons/search-quotation.png" class="container-search__img d-none d-lg-block" alt="user" />
+            <input type="text" class="container-search__input" placeholder="Buscar aquí" [(ngModel)]="searchQuotation">
+        </div>
+
+        <div class="col-3 col-lg-2 container-filter-img d-flex align-items-center justify-content-center ">
+            <div class="col-5 d-flex justify-content-center">
+                <button type="button " class="btn" (click)="refreshQuote() ">
+                    <img class="container-filter-img__img d-block" src="assets/icons/check_box_approver.png " />
+                </button>
+            </div>
+            <div class="col-5 d-flex justify-content-center">
+                <button type="button " class="btn d-block " (click)="filterStateQuotes() ">                   
+                        <img src="assets/icons/arrow-down2.png " class="container-filter-img__show-state">                   
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="filterQuotes === true" class="animated container-filter">
+        <div class="main-list-quotes__div">
+            <button type="button" class="btn container-filter_status-quotation" #valueApprover (click)="selectApprover(valueApprover.value)" value="2">Aprobado</button>
+        </div>
+        <div *ngIf="dataOfUser.roleName === 'COTIZADOR'" class="main-list-quotes__div">
+            <button type="button" class="btn container-filter_status-quotation" #valuePENAPAS (click)="selectApprover(valuePENAPAS.value)" value="1">Pendiente de Aprobación</button>
+        </div>
+        <div *ngIf="dataOfUser.roleName === 'APROBADOR'" class="main-list-quotes__div">
+            <button type="button" class="btn container-filter_status-quotation" #valuePA (click)="selectApprover(valuePA.value)" value="1">Pendiente de Aprobación</button>
+            <span class="rounded-circle mt-2 align-self-start main-list-quotes__circle main-list-quotes__circle--statepenap"></span>
+        </div>
+        <div *ngIf="dataOfUser.roleName === 'APROBADOR'" class="main-list-quotes__div">
+            <button type="button" class="btn container-filter_status-quotation" #valuePAMOD (click)="selectApprover(valuePAMOD.value)" value="5">Pendiente de Aprobación</button>
+            <span class="rounded-circle mt-2 align-self-start main-list-quotes__circle main-list-quotes__circle--stateFinish"></span>
+        </div>
+        <div class="main-list-quotes__div">
+            <button type="button" class="btn container-filter_status-quotation" #valueReject (click)="selectApprover(valueReject.value)" value="4">Rechazado</button>
+        </div>
+        <div class="mt-3"><button type="button" class="btn container-filter__btn" (click)="filterState()">Aplicar</button></div>
+    </div>
+</div>
+
+<div class="content-main-section animated ">
+    <div *ngIf="loading===true " class="lds-default ">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <div *ngIf="quotesLength===0 " class="alert alert-secondary pl-5 " role="alert ">
+        No se encontraron cotizaciones.
+    </div>
+
+
+    <!-- lista de cotizaciones -->
+
+    <div *ngFor="let quotes of objDataQuotes | filterSearch: searchQuotation " class="animated">
+        <div *ngIf="valueId !==quotes.quotationId " class="container-quotation my-2 mx-lg-3 d-flex align-items-center">
+            <button type=" button " class="btn position-relative d-flex align-items-center container-quotation__btn-status" (click)="viewQuote(quotes.quotationId) ">
+                <div class="d-flex align-items-center justify-content-lg-around "> 
+
+                    <span *ngIf="dataOfUser.roleName==='COTIZADOR' && quotes.statusId===7 "
+                    [ngStyle]="{ 'background': dataOfUser.roleName==='COTIZADOR' && quotes.statusId===7 ? '#C0C0C0' : '#687BC6;'} "
+                     class="rounded-circle main-section__letter ">{{quotes.statusAbbreviation}}
+                     </span>
+
+                    <span *ngIf="dataOfUser.roleName==='COTIZADOR' && quotes.statusId===6 "
+                        [ngStyle]="{ 'background': dataOfUser.roleName==='COTIZADOR' && quotes.statusId===6 ? '#C0C0C0' : '#687BC6;'} "
+                    class="rounded-circle main-section__letter ">{{quotes.statusAbbreviation}}
+                    </span>
+               
+                    <span *ngIf="dataOfUser.roleName==='COTIZADOR' && quotes.statusId===5 "
+                    [ngStyle]="{ 'background': dataOfUser.roleName==='COTIZADOR' && quotes.statusId===5 ? '#687BC6' : '#C0C0C0'} "
+                     class="rounded-circle main-section__letter ">{{quotes.statusAbbreviation}}
+                    </span>
+
+                    <span *ngIf="dataOfUser.roleName==='COTIZADOR' && quotes.statusId===4 "
+                    [ngStyle]="{ 'background': dataOfUser.roleName==='COTIZADOR' && quotes.statusId===4 ? '#687BC6' : '#C0C0C0'} "
+                    class="rounded-circle main-section__letter ">{{quotes.statusAbbreviation}}
+                    </span>
+
+
+                    <span *ngIf="dataOfUser.roleName==='COTIZADOR' && quotes.statusId===3 "
+                    [ngStyle]="{ 'background': dataOfUser.roleName==='COTIZADOR' && quotes.statusId===3 ? '#687BC6' : '#C0C0C0'} "
+                     class="rounded-circle main-section__letter ">{{quotes.statusAbbreviation}}
+                    </span>
+
+                    <span *ngIf="dataOfUser.roleName==='COTIZADOR' && quotes.statusId===2 "
+                    [ngStyle]="{ 'background': dataOfUser.roleName==='COTIZADOR' && quotes.statusId===2 ? '#687BC6' : '#C0C0C0'} "
+                     class="rounded-circle main-section__letter ">{{quotes.statusAbbreviation}}
+                    </span>
+                    
+                    <span *ngIf="dataOfUser.roleName==='COTIZADOR' && quotes.statusId===1 "
+                    [ngStyle]="{ 'background': dataOfUser.roleName==='COTIZADOR' && quotes.statusId===1 ? '#687BC6' : '#C0C0C0'} "
+                     class="rounded-circle main-section__letter ">{{quotes.statusAbbreviation}}
+                    </span>
+                  
+                   
+
+                    <span *ngIf="quotes.currentApproverId===null && dataOfUser.roleName==='APROBADOR' && quotes.statusId===1 "
+                    [ngStyle]="{ 'background': quotes.statusId===1 ? '#EA9129' : '#C0C0C0'} "
+                     class="rounded-circle main-section__letter ">{{quotes.statusAbbreviation}}</span>
+                        
+                    <span *ngIf="quotes.currentApproverId===null && dataOfUser.roleName==='APROBADOR' && quotes.statusId===2 "
+                    [ngStyle]="{ 'background': quotes.statusId===2 ? '#687BC6' : '#C0C0C0'} "
+                     class="rounded-circle main-section__letter ">{{quotes.statusAbbreviation}}</span>
+
+                     <span *ngIf="quotes.currentApproverId===null && dataOfUser.roleName==='APROBADOR' && quotes.statusId===3 "
+                    [ngStyle]="{ 'background': quotes.statusId===3 ? '#687BC6' : '#C0C0C0'} "
+                     class="rounded-circle main-section__letter ">{{quotes.statusAbbreviation}}</span>
+
+                     <span *ngIf="quotes.currentApproverId===null && dataOfUser.roleName==='APROBADOR' && quotes.statusId===4 "
+                    [ngStyle]="{ 'background': quotes.statusId===4 ? '#687BC6' : '#C0C0C0;'} "
+                     class="rounded-circle main-section__letter ">{{quotes.statusAbbreviation}}</span>
+
+                     <span *ngIf="quotes.currentApproverId===null && dataOfUser.roleName==='APROBADOR' && quotes.statusId===5 "
+                     [ngStyle]="{ 'background': quotes.statusId===5 ? '#687BC6' : '#C0C0C0'} "
+                      class="rounded-circle ">{{quotes.statusAbbreviation}}</span>
+
+                    <span *ngIf="quotes.currentApproverId===null && dataOfUser.roleName==='APROBADOR' && quotes.statusId===6 "
+                    [ngStyle]="{ 'background': quotes.statusId===6 ? '#C0C0C0' : '#687BC6;'} "
+                     class="rounded-circle main-section__letter ">{{quotes.statusAbbreviation}}</span>
+
+                     <span *ngIf="quotes.currentApproverId===null && dataOfUser.roleName==='APROBADOR' && quotes.statusId===7 "
+                     [ngStyle]="{ 'background': quotes.statusId===7 ? '#C0C0C0' : '#687BC6;'} "
+                      class="rounded-circle main-section__letter ">{{quotes.statusAbbreviation}}</span>
+
+
+                    <span *ngIf="dataOfUser.roleName==='APROBADOR' && quotes.currentApproverId !==null "
+                        [ngStyle]="{ 'background': (quotes.currentApproverId===this.dataOfUser.id ) && quotes.statusAbbreviation==='PA' ? '#EA9129' : '#687BC6;'} "
+                    class="rounded-circle main-section__letter background-climb ">{{quotes.statusAbbreviation}}</span> 
+
+                </div>                
+                <span *ngIf="quotes.statusId===3 " class="rounded-circle main-section__circle "></span>
+                <span *ngIf="quotes.statusId===7 " class="rounded-circle main-section__circle--modified "></span>
+            </button>
+
+            <button type="button " class="col-10 pl-2 pl-lg-0 btn " (click)="viewQuotation(quotes.quotationId, quotes.statusId, quotes.currentApproverId, quotes.statusAbbreviation ) ">
+                <div class="main-section__inf-client">
+                    <p class="main-section__date">{{quotes.modificationDate | date: 'mediumDate'}}</p>
+                    <p class="main-section__inf-client--name">{{quotes.fullName}}</p>
+                    <div class="d-lg-flex">
+                          <div class="m-0">
+                            <span *ngIf="quotes.documentType===1" class="d-inline-block main-section__text">DNI: {{quotes.identifierCode}}<span class="px-1">/</span></span>
+                            <span *ngIf="quotes.documentType===2" class="d-inline-block main-section__text">RUC: {{quotes.identifierCode}}<span class="px-1">/</span></span>                      
+                            <span *ngIf="quotes.documentType===3" class="d-inline-block main-section__text">PAS: {{quotes.identifierCode}}<span class="px-1">/</span></span>  
+                            <span *ngIf="quotes.documentType===4" class="d-inline-block main-section__text">CE: {{quotes.identifierCode}}<span class="px-1">/</span></span> 
+
+                            <span class="d-inline-block main-section__text">Score: {{quotes.riskLevel}}</span><span class="px-1 d-inline-block">/</span>
+                            <!-- <span class="d-inline-block main-section__text">{{quotes.subproductName | titlecase }}</span> <span class="d-none d-lg-inline-block"> &nbsp;/&nbsp; </span> -->
+                            <span *ngIf="quotes.subproductId === 1" class="d-inline-block main-section__text">Empresario <span class="d-none d-lg-inline-block"> &nbsp;/&nbsp; </span></span> 
+                            <span *ngIf="quotes.subproductId === 2" class="d-inline-block main-section__text">Super fácil <span class="d-none d-lg-inline-block"> &nbsp;/&nbsp; </span></span> 
+                        </div> 
+                        <p class="m-0">
+                            <span class="mr-2 main-section__text">TEMNGC: {{quotes.quotedEar | customAmount}} %</span>
+                            <span class="main-section__text">TEMAPB: {{quotes.approvedEar | customAmount}} %</span>
+                        </p>   
+                   </div> 
+                </div>
+            
+            </button>
+        </div>
+        <div *ngIf="valueId===quotes.quotationId " class="main-section__state mx-3 mt-2 mb-2 " [ngStyle]="{ 'background': quotes.statusId===1 && dataOfUser.roleName==='APROBADOR' ? '#EA9129' : '#687BC6;'} ">
+            <button type="button " class="d-flex justify-content-start align-items-center p-0 btn btn-content-state " (click)="viewQuoteStatus(quotes.quotationId) ">
+
+            <span *ngIf="dataOfUser.roleName==='COTIZADOR' " [ngStyle]="{ 'background': dataOfUser.roleName==='COTIZADOR' && quotes.statusId===6 ? '#C0C0C0' : '#687BC6;'} " class="rounded-circle main-section__letter ">{{quotes.statusAbbreviation}}</span>
+
+            <span *ngIf="dataOfUser.roleName==='APROBADOR' " [ngStyle]="{ 'background': quotes.currentApproverId===this.dataOfUser.id && quotes.statusAbbreviation==='PA' ? '#EA9129' : '#687BC6;'} " class="rounded-circle main-section__letter ">{{quotes.statusAbbreviation}}</span>
+            
+           
+            <span *ngIf="quotes.statusId===3 " class="rounded-circle main-section__circle "></span>
+           
+            <span class="mx-auto pr-4 main-section__state-description ">
+             <p *ngIf="quotes.statusId===1 " class="pl-2 ">PENDIENTE DE APROBACIÓN</p>
+             <p *ngIf="quotes.statusId===2 " class="pl-2 ">APROBADO</p>
+             <p *ngIf="quotes.statusId===3 " class="pl-2 ">APROBADO MODIFICADO</p>
+             <p *ngIf="quotes.statusId===4 " class="pl-2 ">RECHAZADO</p>
+             <p *ngIf="quotes.statusId===5 " class="pl-2 ">PENDIENTE DE APROBACIÓN</p>
+             <p *ngIf="quotes.statusId===6 " class="pl-2 ">APROBADO</p>
+             <p *ngIf="quotes.statusId===7 " class="pl-2 ">APROBADO MODIFICADO</p>
+            </span>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<div class="content-btn-view-more " *ngIf="disabledBtnAddQuote===false ">
+    <button (click)=countPageQuote() class="btn-view-more "><img src="assets/icons/plus.png " class="img-view-more "></button>
+</div>
+<div class="content-btn-view-more " *ngIf="disabledBtnAddQuote===true ">
+    <button (click)=countPageQuote() [disabled]="disabledBtnAddQuote ? true : false " class="btn-view-more "><img src="assets/icons/plus_inactive.png " class="img-view-more "></button>
+</div>

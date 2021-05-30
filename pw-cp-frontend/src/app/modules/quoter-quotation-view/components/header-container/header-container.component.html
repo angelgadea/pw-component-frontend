@@ -1,0 +1,28 @@
+<div class="animated">
+    <div class="d-lg-flex justify-content-lg-around align-items-lg-center container-quote-summary-header-lg">
+        <div class="summary-quotation ">
+            <p class="mb-0 text-quote-summary">RESUMEN DE COTIZACIÓN</p>
+        </div>
+        <div class="animated container-quote-summary-header d-flex justify-content-center align-items-center ">
+            <div class="d-flex justify-content-center container-summary-header-inf">
+                <div class="bg-white container-col-one">
+                    <p class="mb-0 text-size">ID</p>
+                    <p class="mb-0 text-size-quotation-id">{{showData.quotationId}}</p>
+                </div>
+                <div class="px-0 bg-white container-col-two">
+                    <p class="mb-0 text-size pl-4 text-padding">Estado de Cotización:</p>
+                    <p class="mb-0 text-size text-size--border pl-4 text-padding">Responsable:</p>
+                </div>
+                <div class="px-0 container-col-three">
+
+                    <p *ngIf="showData.statusId === 2 || showData.statusId === 3 || showData.statusId === 6 || showData.statusId === 7" class="mb-0 text-size text-padding">Aprobado</p>
+                    <p *ngIf="showData.statusId === 1 || showData.statusId === 5 " class="mb-0 text-size text-padding">Pend. de Aprobación</p>
+                    <p *ngIf="showData.statusId === 4" class="mb-0 text-size text-padding">Rechazado</p>
+
+                    <p class="mb-0 text-size text-size--border text-padding">
+                        <span>{{showData.responsableName}}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>

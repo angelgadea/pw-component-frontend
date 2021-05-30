@@ -1,0 +1,214 @@
+<div class="col-lg-auto container-data animated d-lg-none">
+    <div class="d-flex">
+        <div class="col mr-2 title-loan-off pt-1">
+            <h3 [className]="disabledLoan ? 'title-on' : 'title-loan-off'">
+                Datos del Préstamo
+            </h3>
+        </div>
+        <div class="col stepers">
+            <img *ngIf="disabledLoan ? false : true" class="stepers" src="assets/icons/steper_three.png" alt="steper3" />
+            <img *ngIf="disabledLoan ? true : false" class="stepers" src="assets/icons/steper_three_inactive.png" alt="steper3" />
+        </div>
+    </div>
+    <form>
+        <div class="container-loans">
+            <div class="d-flex pt-2">
+                <div class="col mr-2 form-group">
+                    <label [className]="disabledLoan ? 'inactivell' : 'activell'">Moneda</label>
+                    <input [className]="disabledLoan ? 'form-control' : 'form-control activeInputLoan'" disabled name="currency" #currencyId value="Soles" />
+                </div>
+                <div *ngIf="controlAmount === true" class="container-error-amount">
+                    El monto ingresado no se encuentra dentro los límites permitidos
+                </div>
+                <div class="col form-group">
+                    <label [className]="disabledLoan ? 'inactivell' : 'activell'">Monto del préstamo</label>
+                    <input [className]="disabledLoan ? 'form-control input-amount' : 'form-control activeInputLoan'" [disabled]="disabledLoan ? true : false" [id]="controlAmount ? 'error-amount' : 'x'" type="text" name="loanAmount" pattern="^[0-9]+" [(ngModel)]="dataLoan.amount"
+                        placeholder="000.00" (keyup)="onControlLimitAmount()" />
+                </div>
+            </div>
+            <div class="d-flex pt-2">
+                <div *ngIf="controlPeriod === true" class="container-error-term">
+                    El número ingresado no se encuentra dentro los límites permitidos
+                </div>
+                <div class="col form-group ">
+                    <label [className]="disabledLoan ? 'inactivell' : 'activell'">Plazo</label>
+                    <input [className]="disabledLoan ? 'form-control' : 'form-control activeInputLoan'" disabled name="period" value="MESES" />
+                </div>
+                <div class="form-group">
+                    <label></label>
+                    <input [className]="disabledLoan ? 'form-control period' : 'form-control period-active'" [disabled]="disabledLoan ? true : false" [id]="controlPeriod ? 'error-period' : 'y'" type="text" name="periodNumber" [(ngModel)]="dataLoan.period" (keyup)="onControlLimitPeriod()"
+                    />
+                </div>
+                <div class="col form-group">
+                    <label [className]="disabledLoan ? 'inactivell' : 'activell'">Garantía</label>
+                    <select [className]="disabledLoan ? 'form-control' : 'form-control activeInputLoan'" [disabled]="disabledLoan ? true : false" name="warranty" #warrantyId (change)="onDataWarranty(warrantyId.value)">
+                            <option value="1">Sin Garantía</option>
+                            <option value="2">Con Garantía</option>
+                        </select>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex pt-2">
+            <div>
+                <label [className]="disabledLoan ? 'inactivell' : 'activell'">Fecha de desembolso</label>
+                <div class="col d-flex pr-1 pl-0">
+                    <div class="my-date">
+                        <label class="btn btn-file p-0">
+                                <img *ngIf="disabledLoan ? false : true" class="calendary" src="assets/icons/calendary_active.png" alt="calendary-active" />
+                                <img *ngIf="disabledLoan ? true : false" class="calendary" src="assets/icons/calendary_inactive.png" alt="calendary-inactive" />
+                        </label>
+                    </div>
+                    <div class="col-xs form-group disbursementDate animated fadeIn">
+                        <input type="date" name="currentDate" id="currentDate" value="" #currentDate (change)="selectDate(currentDate.value)" [disabled]="disabledLoan ? true : false" [className]="disabledLoan ? 'form-control disbursementDate' : 'form-control disbursementDate'"
+                        />
+                    </div>
+                    <div class="col-xs form-group currentDate">
+                        <input type="text" value="{{dataLoan.disbursementDate}}" [className]="disabledLoan ? 'form-control currentDate' : 'form-control activeInputLoan'" disabled />
+                    </div>
+                </div>
+            </div>
+            <div class="col form-group">
+                <label [className]="disabledLoan ? 'inactivell' : 'activell'">Día de pago</label>
+                <select [className]="disabledLoan ? 'form-control' : 'form-control activeInputLoan'" [disabled]="disabledLoan ? true : false" name="payday" #payday (change)="selectPayday(payday.value)">
+                        <option class="d-none" selected>Elegir</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="6">6</option>
+                        <option value="8">8</option>
+                        <option value="10">10</option>
+                        <option value="12">12</option>
+                        <option value="14">14</option>
+                        <option value="16">16</option>
+                        <option value="18">18</option>
+                        <option value="20">20</option>
+                        <option value="22">22</option>
+                        <option value="24">24</option>
+                </select>
+            </div>
+        </div>
+        <div class="col form-group">
+            <label [className]="disabledLoan ? 'inactivell' : 'activell'">Seguro de protección</label>
+            <select [className]="disabledLoan ? 'form-control' : 'form-control activeInputLoan'" [disabled]="disabledLoan ? true : false" name="protectionInsurance" #protectionInsurance (change)="selectProtectionInsurance(protectionInsurance.value)">
+                    <option value="1">Sin seguro</option>
+                    <option value="2">Plan 1 - S/ 8.00</option>
+                    <option value="3">Plan 2 - S/ 10.00</option>
+             </select>
+        </div>
+        <div class="col form-group">
+            <button [className]="disabledBtnCalculateRate ? 'col btn btn-calculate-rate' : 'col btn active-btn-calculate-rate'" [disabled]="disabledBtnCalculateRate ? true : false" type="button" (click)="onCalculateRate()">
+                    <img *ngIf="disabledBtnCalculateRate ? true : false" class="img"
+                        src="assets/icons/rate_inactive.png" alt="calculate-rate-inactive" />
+                    <img *ngIf="disabledBtnCalculateRate ? false : true" class="img" src="assets/icons/rate_active.png"
+                        alt="calculate-rate-active" />
+                    Calcular Tasa
+            </button>
+
+        </div>
+    </form>
+</div>
+
+<!-- Desktop -->
+
+<div class="bg-white d-lg-block d-none main-loan mb-lg-2 px-lg-3 py-lg-3">
+
+    <p [className]="disabledLoan ? 'main-loan__title main-loan__title--inactive': 'main-loan__title'">3. Datos del Préstamo</p>
+
+    <div class="row main-loan__container">
+
+        <div class="col-currency">
+            <p [className]="disabledLoan ? 'main-loan__subtitle main-loan__subtitle--inactive mb-md-0': 'main-loan__subtitle mb-md-0'">Moneda</p>
+            <input type="text" [className]="disabledLoan ? 'main-loan__input main-loan__input--inactive':'main-loan__input'" disabled #currencyId2 value="Soles">
+        </div>
+
+        <div class="col-loan-amount position-relative">
+            <div *ngIf="controlAmount === true" class="container-error-amount">
+                El monto ingresado no se encuentra dentro los límites permitidos
+            </div>
+
+            <p [className]="disabledLoan ? 'main-loan__subtitle main-loan__subtitle--inactive mb-md-0': 'main-loan__subtitle mb-md-0'">Monto de préstamo</p>
+            <input type="text" [id]="controlAmount ? 'error-amount' : 'x'" [className]="disabledLoan ? 'main-loan__input main-loan__input--inactive':'main-loan__input'" [disabled]="disabledLoan ? true : false" name="loanAmount" pattern="^[0-9]+" [(ngModel)]="dataLoan.amount"
+                placeholder="000.00" (keyup)="onControlLimitAmount()">
+        </div>
+
+        <div class="col-time-limit position-relative">
+            <div *ngIf="controlPeriod === true" class="container-error-term">
+                El número ingresado no se encuentra dentro los límites permitidos
+            </div>
+            <p [className]="disabledLoan ? 'main-loan__subtitle main-loan__subtitle--inactive mb-md-0': 'main-loan__subtitle mb-md-0'">Plazo</p>
+            <input type="text" [className]="disabledLoan ? 'main-loan__input main-loan__input--inactive':'main-loan__input'" disabled value="Meses">
+        </div>
+        <div class="col-time-limit-num">
+            <input type="text" [id]="controlPeriod ? 'error-period' : 'y'" [className]="disabledLoan ? 'main-loan__input main-loan__input--term main-loan__input--inactive':'main-loan__input--term main-loan__input'" [disabled]="disabledLoan ? true : false" name="periodNumber2"
+                [(ngModel)]="dataLoan.period" (keyup)="onControlLimitPeriod()">
+        </div>
+
+        <div class="col-warranty">
+            <p [className]="disabledLoan ? 'main-loan__subtitle main-loan__subtitle--inactive mb-md-0': 'main-loan__subtitle mb-md-0'">Garantía</p>
+            <select [className]="disabledLoan ? ' main-load__select main-load__select--inactive' : 'main-load__select'" [disabled]="disabledLoan ? true : false" name="warranty2" #warrantyId2 (change)="onDataWarranty(warrantyId2.value)">
+                <option value="1">Sin garantía</option>
+                <option value="2">Con garantía</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-start py-md-3">
+
+        <div class="main-load__disbursement-date">
+            <p [className]="disabledLoan ? 'main-loan__subtitle main-loan__subtitle--inactive mb-md-0': 'main-loan__subtitle mb-md-0'">Fecha de desembolso</p>
+            <div class="d-md-flex justify-content-md-start position-relative">
+                <div class="main-load__calendar">
+                    <!-- <img *ngIf="disabledLoan ? false : true" class="main-load__img" src="assets/icons/calendario.png" alt="calendary-active" />
+                    <img *ngIf="disabledLoan ? true : false" class="main-load__img" src="assets/icons/calendar-inactive.png" alt="calendary-inactive" />
+                    <input type="date" name="currentDate2" id="currentDate2" value="" #currentDate2 (change)="selectDate(currentDate2.value )" [disabled]="disabledLoan ? true : false" [className]="disabledLoan ? ' main-load__input--disbursement' : 'main-load__input main-load__input--disbursement'"> -->
+                    <div *ngIf="messageErrorDateDisbursement===true" class="container-error-disbursement-date">
+                        Elegir una fecha mayor o igual a la fecha actual.
+                    </div>
+                    <input type="date" name="currentDate2" value="" #currentDate2 (change)="selectDate(currentDate2.value )" [disabled]="disabledLoan ? true : false" [className]="disabledLoan ? ' main-load__input-disbursement' : 'main-load__input-disbursement main-load__input-disbursement--active'">
+                </div>
+
+                <!-- <div class="ml-lg-2">
+                    <input type="text" value="{{dataLoan.disbursementDate}}" [className]="disabledLoan ? 'main-loan__input main-loan__input--inactive main-loan__input--disbursement-date' : 'main-loan__input main-loan__input--disbursement-date'" disabled />
+                </div> -->
+            </div>
+        </div>
+
+        <div class="main-load__limit-time">
+            <p [className]="disabledLoan ? 'main-loan__subtitle main-loan__subtitle--inactive mb-md-0': 'main-loan__subtitle mb-md-0'">Día de pago</p>
+            <select name="payday2" id="" [className]="disabledLoan ? ' main-load__select main-load__select--day-pay main-load__select--inactive' : 'main-load__select main-load__select--day-pay'" [disabled]="disabledLoan ? true : false" #payday2 (change)="selectPayday(payday2.value)">
+                <option class="d-none" selected>Elegir</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="6">6</option>
+                <option value="8">8</option>
+                <option value="10">10</option>
+                <option value="12">12</option>
+                <option value="14">14</option>
+                <option value="16">16</option>
+                <option value="18">18</option>
+                <option value="20">20</option>
+                <option value="22">22</option>
+                <option value="24">24</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-5">
+            <p [className]="disabledLoan ? 'main-loan__subtitle main-loan__subtitle--inactive mb-md-0': 'main-loan__subtitle mb-md-0'">Seguro de protección</p>
+            <select name="protectionInsurance2" [className]="disabledLoan ? ' main-load__select main-load__select--inactive' : 'main-load__select'" [disabled]="disabledLoan ? true : false" #protectionInsurance2 (change)="selectProtectionInsurance(protectionInsurance2.value)">
+                <option value="1">Sin seguro</option>
+                <option value="2">Plan 1 (S/ 8.00)</option>
+                <option value="3">Plan 2 (S/ 10.00)</option>
+            </select>
+        </div>
+        <div class="col-lg-6">
+            <div class="py-md-4">
+                <button type="button" [className]="disabledBtnCalculateRate ? 'btn  main-load__btn main-load__btn--inactive ': 'btn  main-load__btn '" [disabled]="disabledBtnCalculateRate ? true : false" (click)="onCalculateRate()">Calcular Tasa</button>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,327 @@
+@font-face {
+    font-family: titilliumweb-light;
+    src: url(../../../../../assets/fonts/TitilliumWeb-Light.ttf);
+}
+
+@font-face {
+    font-family: titilliumweb-regular;
+    src: url(../../../../../assets/fonts/TitilliumWeb-Regular.ttf);
+}
+
+@font-face {
+    font-family: ubuntu-regular;
+    src: url(../../../../../assets/fonts/Ubuntu-Regular.ttf);
+}
+
+@font-face {
+    font-family: ubuntu-light;
+    src: url(../../../../../assets//fonts/Ubuntu-Light.ttf)
+}
+
+@font-face {
+    font-family: ubuntu-medium;
+    src: url(../../../../../assets//fonts/Ubuntu-Medium.ttf)
+}
+
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.fast {
+    -webkit-animation-duration: 0.4s;
+    animation-duration: 0.4s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    animation-name: fadeIn;
+}
+
+
+/* for smartphone */
+
+@media (min-width: 300px) {
+    .container-logo {
+        padding-top: 90px;
+    }
+    .container-login {
+        height: 85vh;
+        width: 95%;
+        margin: auto;
+        padding: 0 50px;
+    }
+    .container-form-login {
+        margin: auto;
+        padding-top: 30px
+    }
+    .container-form-login__title {
+        font-size: 20px;
+        line-height: 23px;
+        margin-bottom: 30px;
+        font-family: ubuntu-regular, Arial, Helvetica, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        color: #83786F;
+        letter-spacing: -0.5px;
+    }
+    .container-form-login__title--bold {
+        font-weight: bold;
+    }
+    .container-form-login__text-validation {
+        font-size: 16px;
+        line-height: 21px;
+        padding-right: 5px;
+        font-family: titilliumweb-light, Arial, Helvetica, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        float: right;
+        letter-spacing: -0.5px;
+        color: #F04C3E;
+    }
+    .container-user {
+        padding-bottom: 25px;
+        position: relative;
+    }
+    .container-user__icon-user,
+    .container-password__icon-lock {
+        position: absolute;
+        top: 12px;
+        left: 10px;
+        pointer-events: none;
+        width: 15px;
+        height: 15px;
+    }
+    .container-user__icon-user--bug {
+        top: 35px;
+    }
+    .container-password__icon-lock--bug {
+        top: 13px;
+    }
+    .icon-alert-bug {
+        position: absolute;
+        top: 35px;
+        right: 15px;
+        width: 15px;
+        height: 15px;
+    }
+    .icon-alert-bug--password {
+        top: 13px
+    }
+    .container-user__input {
+        width: 100%;
+        height: 42px;
+        font-size: 14px;
+        line-height: 24px;
+        font-family: titilliumweb-regular, Arial, Helvetica, sans-serif;
+        color: #83786F;
+        border-radius: 5px;
+        border: 1px solid #83786F;
+        box-shadow: none;
+        box-sizing: border-box;
+        padding-left: 30px;
+    }
+    .container-user__input:hover {
+        border: 2px solid #CA005D;
+    }
+    .container-user__input:focus {
+        outline: none;
+    }
+    .ng-invalid.ng-touched:not(form) {
+        border: 1px solid #F04C3E;
+    }
+    .ng-dirty.ng-touched.ng-valid:not(form) {
+        border: 1px solid #83786F;
+    }
+    .container-user__input--error {
+        border: 1px solid #F04C3E;
+    }
+    .btn-icon-eye {
+        border: none;
+        box-shadow: none;
+    }
+    .btn-icon-eye__icon-eye {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 15px;
+        height: 15px;
+    }
+    .container-password__link-password {
+        font-size: 14px;
+        line-height: 21px;
+        padding-top: 15px;
+        padding-right: 5px;
+        color: #91004B;
+        float: right;
+        font-family: titilliumweb-regular, Arial, Helvetica, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        letter-spacing: -0.5px;
+        align-items: center;
+    }
+    .enter-login {
+        font-family: ubuntu-regular, Arial, Helvetica, sans-serif;
+        font-size: 20px;
+        line-height: 22px;
+        width: 100%;
+        height: 42px;
+        margin-top: 20px;
+        margin-bottom: 15px;
+        font-weight: 500;
+        font-style: normal;
+        text-align: center;
+        color: #FFFFFF;
+        background-color: #CA005D;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 10px;
+    }
+}
+
+
+/* Tablet */
+
+@media(min-width:768px) {
+    .container-form-login {
+        padding-top: 150px;
+        width: 75%;
+    }
+    .container-form-login__title {
+        font-size: 25px;
+    }
+    .container-form-login__text-validation {
+        font-size: 16px;
+    }
+    .container-user__input {
+        height: 50px;
+        font-size: 18px;
+    }
+    .container-user__input:hover {
+        border: 2px solid #CA005D;
+    }
+    .container-user__input:focus {
+        outline: none;
+    }
+    .container-user__input::placeholder {
+        color: #c0c0c0
+    }
+    .container-user {
+        padding-bottom: 30px;
+    }
+    .container-password__link-password {
+        font-size: 16px;
+    }
+    .enter-login {
+        font-size: 22px;
+        line-height: 22px;
+        height: 50px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .container-user__icon-user,
+    .container-password__icon-lock {
+        top: 18px;
+    }
+    .container-user__icon-user--bug {
+        top: 40px;
+    }
+    .container-password__icon-lock--bug {
+        top: 18px;
+    }
+    .icon-alert-bug {
+        top: 40px;
+    }
+    .icon-alert-bug--password {
+        top: 18px
+    }
+}
+
+
+/* Desktop */
+
+@media(min-width:992px) {
+    .container-form-login {
+        width: 420px;
+        padding-left: 1%;
+        margin-left: 50px;
+        padding-right: 3%;
+        margin-right: 38px;
+        padding-top: 0;
+    }
+    .container-login {
+        height: 100vh;
+        padding: 0;
+    }
+    .container-logo {
+        padding-top: 0px;
+    }
+    .container-form-login::before {
+        content: '';
+        position: absolute;
+        left: 58%;
+        width: 0.5px;
+        height: 335px;
+        background: #999999;
+        top: 22%
+    }
+    .container-form-login__title {
+        font-family: ubuntu-light, Arial, Helvetica, sans-serif;
+        font-size: 30px;
+        margin-bottom: 70px;
+    }
+    .container-form-login__text-validation {
+        font-size: 16px;
+        padding-bottom: 5px;
+    }
+    .container-user__input {
+        width: 100%;
+        height: 60px;
+        font-size: 20px;
+        padding-left: 40px;
+    }
+    .container-user__input:hover {
+        border: 2px solid #CA005D;
+    }
+    .container-user__input:focus {
+        outline: none;
+    }
+    .container-user__icon-user,
+    .container-password__icon-lock {
+        top: 20px;
+        width: 20px;
+        height: 20px;
+    }
+    .container-user__icon-user--bug {
+        top: 45px;
+    }
+    .icon-alert-bug {
+        width: 20px;
+        height: 20px;
+    }
+    .btn-icon-eye__icon-eye {
+        top: 20px;
+        width: 20px;
+        height: 20px;
+    }
+    .container-password__link-password {
+        font-size: 16px;
+        padding-top: 8px;
+        padding-right: 5px;
+    }
+    .enter-login {
+        font-size: 22px;
+        margin-top: 30px
+    }
+}

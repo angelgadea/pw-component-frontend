@@ -1,0 +1,246 @@
+<app-header-nav></app-header-nav>
+<div class="W-100 header-evaluation-tem animated fadeIn">
+    <h3 class="p-1 header-evaluation-tem--name">Evaluación de TEM</h3>
+</div>
+
+<div *ngIf="loadingTem === true" class="lds-default">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+
+<div *ngIf="loadingTem === false" class="content-general animated fadeIn">
+    <div class="content-data-of-loan">
+        <div [className]="contentLoan ? 'w-100 d-flex flex-row  justify-content-between position-relative content-data-of-loan--header_active' : 'w-100 d-flex flex-row  justify-content-between position-relative content-data-of-loan--header'">
+            <label [className]="contentLoan ? 'p-1 pl-5 content-data-of-loan--title_active' : 'p-1 pl-5 content-data-of-loan--title'" class="d-flex align-items mb-0">Datos del préstamo</label>
+            <button type="button" class="btn btn-view-content-of-loan d-flex align-items" (click)="viewContentOfLoan()">
+                <img class="icon-sort-down" src="assets/icons/sort_down.png" alt="sort_down" [ngClass]="{'d-block': btnDateLoanWhite === true, 'd-none': btnDateLoanWhite === false}">
+                <img class="icon-sort-down" src="assets/icons/sort_down_hidden.png" alt="sort_down" [ngClass]="{'d-block': btnDateLoanWhite === false, 'd-none': btnDateLoanWhite === true}" >    
+            </button>
+        </div>
+        <div *ngIf="contentLoan === true" class="w-100 content-data-of-loan--body animated">
+            <label class="p-2 m-0 content-data-of-loan--name-client">{{objTemEvaluation.customerName}} - CLIENTE</label>
+            <div class="d-flex px-3 py-3 content-data-of-loan--table">
+                <div class="w-100 content-data-of-loan__item">
+                    <table class="mb-0 table">
+                        <tr>
+                            <th class="p-1 table--key">Segmento:</th>
+                            <td class="p-1 table--value">{{objTemEvaluation.basicSegmentName}} </td>
+                        </tr>
+                        <tr>
+                            <th class="p-1 table--key">Producto:</th>
+                            <td class="p-1 table--value">{{objTemEvaluation.subproductName}}</td>
+                        </tr>
+                        <tr>
+                            <th class="p-1 table--key">Plazo:</th>
+                            <td class="p-1 table--value">Meses {{objTemEvaluation.loanDays/30 }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="w-100 content-data-of-loan__item">
+                    <table class="mb-0 table">
+                        <tr>
+                            <th class="p-1 table--key">Score:</th>
+                            <td class="p-1 table--value">{{objTemEvaluation.riskLevel}}</td>
+                        </tr>
+                        <tr>
+                            <th class="p-1 table--key">Monto:</th>
+                            <td class="p-1 table--value">{{objTemEvaluation.loanAmount | customAmount }}</td>
+                        </tr>
+                        <tr>
+                            <th class="p-1 table--key">Seguro:</th>
+                            <td class="p-1 table--value">{{objTemEvaluation.insuranceName | removeDotCurrency}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Sustentos -->
+
+    <div class="content-data-livelihoods animated" [ngClass]="{'d-none': objTemEvaluationSustentation.comment == null || objTemEvaluationSustentation.comment == '' }">
+        <div [className]="contentLivelihoods ? 'w-100 d-flex flex-row  justify-content-between content-data-livelihoods--header_active' : 'w-100 d-flex flex-row  justify-content-between content-data-livelihoods--header'">
+            <label [className]="contentLivelihoods ? 'p-1 pl-5 content-data-of-loan--title_active' : 'p-1 pl-5 content-data-of-loan--title'" class="d-flex align-items mb-0">Sustentos</label>
+            <button type="button" class="btn btn-view-content-livelihoods d-flex align-items" (click)="viewContentLivelihoods()">
+                <img class="icon-sort-down" src="assets/icons/sort_down.png" alt="sort_down"  [ngClass]="{'d-block': btnSustentationWhite === true, 'd-none': btnSustentationWhite === false}">
+                <img class=" icon-sort-down" src="assets/icons/sort_down_hidden.png" alt="sort_down" [ngClass]="{'d-block': btnSustentationWhite === false, 'd-none': btnSustentationWhite === true}">  
+            </button>
+        </div>
+        <div *ngIf="contentLivelihoods === true" class="w-100 px-4 py-2 content-data-livelihoods--body animated">
+            <label class="px-1 content-data-livelihoods--title">{{objTemEvaluationSustentation.currentQuoterName | uppercase}} {{objTemEvaluationSustentation.currentQuoterFirstSurName | uppercase}}/{{objTemEvaluationSustentation.roleNames}}</label>
+            <p class="content-data-livelihoods--paragraph">{{objTemEvaluationSustentation.comment}}</p>
+            <div class="d-inline-flex attach-file" *ngIf="lengthFile > 0">
+                <img class="icon-attach-file" src="assets/icons/attach_active.png" alt="attach-file">
+                <a class="attach-file--title" (click)="fileQuotation()">Ver archivos adjuntos</a>
+                <span class="ml-1 attach-file--quantity">{{lengthFile}}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Más información -->
+    <div class="content-data-more-information animated">
+        <div [className]="contentInformation ? 'w-100 d-flex flex-row position-relative  justify-content-between content-data-more-information--header_active' : 'w-100 d-flex flex-row position-relative  justify-content-between content-data-more-information--header'">
+            <label [className]="contentInformation ? 'p-1 pl-5 content-data-of-loan--title_active' : 'p-1 pl-5 content-data-of-loan--title'" class="d-flex align-items mb-0">Más información</label>
+            <button type="button" class="btn btn-view-content-more-information d-flex align-items" (click)="viewContentInformation()">
+                <img class="icon-sort-down" src="assets/icons/sort_down.png" alt="sort_down" [ngClass]="{'d-block': btnInformationWhite === true, 'd-none': btnInformationWhite === false}">
+                <img class=" icon-sort-down" src="assets/icons/sort_down_hidden.png" alt="sort_down" [ngClass]="{'d-block': btnInformationWhite === false, 'd-none': btnInformationWhite === true}">    
+            </button>
+        </div>
+
+        <div *ngIf="contentInformation === true" class="animated">
+            <div class="pl-5 content-data-more-information__item">
+                <label class="my-2">Resumen de cotización</label>
+                <a class="m-2 link-btn float-right text-white" (click)="viewQuotation()">Ir</a>
+            </div>
+
+            <!-- Para redireccionar a Historial -->
+            <div class="pl-5 content-data-more-information__item">
+                <label class="my-2">Historial de cotización</label>
+                <a type="button" class="m-2 link-btn float-right text-white" (click)="viewQuotationHistory()">Ir</a>
+            </div>
+
+        </div>
+    </div>
+    <div class="d-flex w-100 my-2 content-data-rate">
+        <div class="w-50 pt-1 d-flex flex-column justify-content-center align-items-center content-data-rate__item">
+            <label class="m-0 content-data-rate--name">TEM<span class="pl-2 content-data-rate--subname">Base</span></label>
+            <p class="m-0 content-data-rate--prefix">de la herramienta</p>
+            <span class="content-data-rate--tem">{{objTemEvaluation.minRate | customAmount}} %</span>
+        </div>
+        <div class="w-50 pt-1 d-flex flex-column justify-content-center align-items-center content-data-rate__item">
+            <label class="m-0 content-data-rate--name">TEM<span class="pl-2 content-data-rate--subname">Negociada</span></label>
+            <p class="m-0 content-data-rate--prefix">por el asesor</p>
+            <span class="content-data-rate--tem">{{objTemEvaluation.quoted_rate | customAmount}} %</span>
+        </div>
+        <div *ngIf="objTemEvaluation.requested_rate !== null" class="w-50 pt-1 d-flex flex-column justify-content-center align-items-center content-data-rate__item">
+            <label class="m-0 content-data-rate--name">TEM<span class="pl-2 content-data-rate--subname">Sugerida</span></label>
+            <p class="m-0 content-data-rate--prefix">por el aprobador anterior</p>
+            <span class="content-data-rate--tem">{{objTemEvaluation.requested_rate | customAmount}} %</span>
+        </div>
+    </div>
+    <label *ngIf="errorLimit === true" class="container-error-rate-agreed" for="errorMessage">
+        Tasa ingresada no permitida.
+    </label>
+    <div class="W-100 d-flex flex-column justify-content-center align-items-center content-input-tem">
+        <div class="content-input-tem-body" id="errorMessage">
+            <label class="content-input-tem-name">Ingresar la TEM:</label>
+            <span class="content-input__porcentage">%</span>
+            <input class="content-input ml-2" [(ngModel)]="dataTemEvaluation.negotiatedRate" (keyup)="validateTemNegociated()">
+        </div>
+    </div>
+    <div class="w-100 d-flex flex-column align-items-center my-2 content-comment">
+        <div class="w-75 mt-2 content-see-tem">
+            <span>TEM : </span>
+            <span>{{dataTemEvaluation.negotiatedRate}} %</span>
+        </div>
+        <div class="w-75 mt-2">
+            <label class="m-0 content-comment-title">Ingresar comentarios</label>
+            <textarea class="w-100 content-comment-paragraph" [(ngModel)]="dataTemEvaluation.commentTemEvaluation"></textarea>
+        </div>
+        <div class="w-75 content-comment-buttons d-flex justify-content-between">
+            <button type="button" [disabled]="btnApprove ? false : true" [className]="btnApprove ? 'btn my-1  content-comment-buttons__item-one_active style-btn' : 'btn my-1  content-comment-buttons__item-one style-btn'" data-toggle="modal" data-target="#approverTem"
+                (click)="approveModal()">
+                <img *ngIf="btnApprove === false" class="icon-arrow" src="assets/icons/arrow-down-on-black-left.png" alt="icon-arrow-left">
+                <img *ngIf="btnApprove === true" class="icon-arrow" src="assets/icons/arrow_circle_left.png" alt="icon-arrow-left">
+                Aprobar
+            </button>
+            <button type="button" [disabled]="btnRaise ? false : true" [className]="btnRaise ? 'btn my-1  content-comment-buttons__item-two_active style-btn' : 'btn my-1  content-comment-buttons__item-two style-btn'" data-toggle="modal" data-target="#raiseTem" (click)="raiseModal()">
+                <img *ngIf="btnRaise === true" class="icon-arrow" src="assets/icons/arrow-down-on-black-top.png" alt="icon-arrow-top">
+                <img *ngIf="btnRaise === false" class="icon-arrow" src="assets/icons/arrow_circle_top.png" alt="icon-arrow-top">
+                Elevar
+            </button>
+            <button type="button" class="btn my-1  content-comment-buttons__item-three style-btn" data-toggle="modal" data-target="#refuserTem" (click)="rejectModal()">
+                <img class="icon-arrow" src="assets/icons/arrow_circle_right.png" alt="icon-arrow-right" >
+                Rechazar
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="approverTem" data-backdrop="true" tabindex="-1" role="dialog" aria-labelledby="sendRequest" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div *ngIf="modalError === false" class="modal-body">
+                <p class="body-title">La cotización será aprobada con una </p>
+                <p class="body-title">TEM {{dataTemEvaluation.negotiatedRate}} %</p>
+                <p class="body-subtitle">¿Deseas continuar?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-yes" data-dismiss="modal" (click)="approveRate()">Sí</button>
+                <button class="btn btn-not" data-dismiss="modal" [routerLink]="['/tem-evaluation']">No</button>
+            </div>
+        </div>
+        <div *ngIf="modalError === true" class="modal-content">
+            <div class="modal-body">
+                <p class="body-title">Ingresar una TEM válida.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-not w-100" data-dismiss="modal" [routerLink]="['/tem-evaluation']">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade " id="refuserTem" data-backdrop="true" tabindex="-1" role="dialog" aria-labelledby="sendRequest" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div *ngIf="modalError === false" class="modal-content">
+            <div class="modal-body">
+                <p class="body-title">La cotización será rechazada con una TEM {{dataTemEvaluation.negotiatedRate}} %</p>
+                <p class="body-subtitle">¿Deseas continuar?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-yes" data-dismiss="modal" (click)="toRefuseRate()">Sí</button>
+                <button class="btn btn-not" data-dismiss="modal" [routerLink]="['/tem-evaluation']">No</button>
+            </div>
+        </div>
+        <div *ngIf="modalError === true" class="modal-content">
+            <div class="modal-body">
+                <p class="body-title">Ingresar una TEM válida.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-not w-100" data-dismiss="modal" [routerLink]="['/tem-evaluation']">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade " id="raiseTem" data-backdrop="true" tabindex="-1" role="dialog" aria-labelledby="sendRequest" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div *ngIf="modalError === false" class="modal-content">
+            <div class="modal-header">
+                <p *ngIf="dataTemEvaluation.approvalLevel === 1">Nivel de aprobación: Gerente de Agencia</p>
+                <p *ngIf="dataTemEvaluation.approvalLevel === 2">Nivel de aprobación: Gerente Regional</p>
+                <p *ngIf="dataTemEvaluation.approvalLevel === 3">Nivel de aprobación: Gerente Divisional</p>
+                <p *ngIf="dataTemEvaluation.approvalLevel === 4">Nivel de aprobación: Gerente de Crédito individual</p>
+            </div>
+            <div class="modal-body">
+                <p *ngIf="this.dataOfUser.positionId === 2" class="body-title">Tu cotización será elevada al Gerente de agencia con una TEM {{dataTemEvaluation.negotiatedRate}} %</p>
+                <p *ngIf="this.dataOfUser.positionId === 3" class="body-title">Tu cotización será elevada al Gerente regional con una TEM {{dataTemEvaluation.negotiatedRate}} %</p>
+                <p *ngIf="this.dataOfUser.positionId === 4" class="body-title">Tu cotización será elevada al Gerente divisional con una TEM {{dataTemEvaluation.negotiatedRate}} %</p>
+                <p *ngIf="this.dataOfUser.positionId === 5" class="body-title">Tu cotización será elevada al Gerente de Crédito individual con una TEM {{dataTemEvaluation.negotiatedRate}} %</p>
+                <p class="body-subtitle">¿Deseas continuar?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-yes" data-dismiss="modal" (click)="raiseRate()">Sí</button>
+                <button class="btn btn-not" data-dismiss="modal" [routerLink]="['/tem-evaluation']">No</button>
+            </div>
+        </div>
+        <div *ngIf="modalError === true" class="modal-content">
+            <div class="modal-body">
+                <p class="body-title">Ingresar una TEM válida.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-not w-100" data-dismiss="modal" [routerLink]="['/tem-evaluation']">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>

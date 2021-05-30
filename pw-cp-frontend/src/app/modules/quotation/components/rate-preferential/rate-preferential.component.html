@@ -1,0 +1,107 @@
+<div [className]="enabledContentRatePreferential ? 'col-md-auto mt-2 container-data' : 'col-md-auto mt-2 none-container-data'">
+    <div class="d-flex mt-3">
+        <div class="col desktop title-client-off">
+            <h3 class="title-client-off pt-1">
+                5. Solicitud de Tasa Preferencial
+            </h3>
+        </div>
+
+        <div class="col movile title-client-off">
+            <h3 class="title-client-off pt-1">
+                Solicitud de Tasa Preferencial
+            </h3>
+        </div>
+        <div class="col movile stepers">
+            <img class="stepers" src="assets/icons/steper_five.png" alt="steper-five-active" />
+        </div>
+    </div>
+    <div class="mt-4 container-rate-referential">
+        <div class="col d-flex tem-desktop">
+            <div class="mr-4 ">
+                <h3 class="title-referential">TEM</h3>
+                <h3 class="title-referential">Negociada</h3>
+            </div>
+            <div class="col form-group right-value">
+                <input class="form-control input-rate-referential" type="text" name="dateRateAgreed" disabled value="{{dataRate.rateAgreed}} %" />
+            </div>
+        </div>
+        <div class="col form-group">
+            <label class="comment">Indicar sustento correspondiente</label>
+            <textarea class="form-control textarea" rows="5" [(ngModel)]="dataRate.commentRatePreferential" name="comment" #comment="ngModel" (keyup)="onRatePreferential()"></textarea>
+        </div>
+
+        <label *ngIf="showErrorSize === true" class="container-error-attach" for="file">
+          El tamaño máximo es de 5MB por archivo.
+        </label>
+
+        <label *ngIf="showDuplicateError === true" class="container-error-attach" for="file">
+            No puedes adjuntar archivos repetidos.
+          </label>
+
+        <label *ngIf="errorMaximumNumberFile === true" class="container-error-attach" for="file">
+            Sólo puedes adjuntar un máximo de 5 archivos.
+         </label>
+
+        <div class="col">
+            <div class="mt-2 attach-file">
+                <label class="btn btn-file d-flex">
+                  <img class="img-attach-file mb-1 " src="assets/icons/attach_active.png" alt="img-enlace">
+                  <a class="attach-file__title ml-1">Adjuntar archivo</a>
+                  <input type="file" accept="image/jpg, image/jpeg, ,image/png, application/pdf"
+                      (click)="file.value = null"
+                      class="myfile d-none" id="file" #file name="myfile" [disabled]="disabledAttachFile ? true : false" (change)="attachDataFile($event.target.files)" multiple />
+                  <div class="border-num-files">
+                    <span class="">{{quantityFile}}</span>
+                  </div>
+                  </label>
+            </div>
+
+            <div *ngFor="let list of listDataFiles" class="file__item">
+                <p>{{list.name}}<button type="button" class="btn p-0" (click)="deleteFile(list.name)"><img class="mx-4" src="assets/icons/cancel.png"
+                      alt="cancel" /></button></p>
+            </div>
+
+            <div class="col mt-2 form-group btn-send-desktop">
+                <button [className]="disabledBtnSendRequest ? 'col btn btn-send-request' : 'col btn offBtn'" type="button" data-toggle="modal" data-target="#sendRequest" (click)="onQueryApprovalLevel()" [disabled]="disabledBtnSendRequest ? true : false">
+                <img *ngIf="disabledBtnSendRequest === true" class="img" src="assets/icons/save_rate_inactive.png"
+                      alt="save-rate-inactive" />
+                <img *ngIf="disabledBtnSendRequest === false" class="img" src="assets/icons/save_rate_active.png"
+                      alt="save-rate-active" />
+                Guardar y Enviar Solicitud
+              </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 mt-2 form-group btn-send-movil">
+        <button [className]="disabledBtnSendRequest ? 'col btn btn-send-request' : 'col btn offBtn'" type="button" data-toggle="modal" data-target="#sendRequest" (click)="onQueryApprovalLevel()" [disabled]="disabledBtnSendRequest ? true : false">
+    <img *ngIf="disabledBtnSendRequest === true" class="img" src="assets/icons/save_rate_inactive.png"
+          alt="save-rate-inactive" />
+    <img *ngIf="disabledBtnSendRequest === false" class="img" src="assets/icons/save_rate_active.png"
+          alt="save-rate-active" />
+    Guardar y Enviar Solicitud
+  </button>
+    </div>
+
+</div>
+
+<div class="modal fade" id="sendRequest" data-backdrop="true" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="d-flex modal-header">
+                <p *ngIf="dataRate.approvalLevel === 1">Nivel de aprobación: Jefe de crédito</p>
+                <p *ngIf="dataRate.approvalLevel === 2">Nivel de aprobación: Gerente de agencia</p>
+                <p *ngIf="dataRate.approvalLevel === 3">Nivel de aprobación: Gerente regional</p>
+                <p *ngIf="dataRate.approvalLevel === 4">Nivel de aprobación: Gerente divisional</p>
+                <p *ngIf="dataRate.approvalLevel === 5">Nivel de aprobación: Gerente de crédito individual</p>
+            </div>
+            <div class="modal-body">
+                <p class="body-title">Tu cotización será enviada al jefe de crédito</p>
+                <p class="body-subtitle">¿Deseas continuar?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-yes" data-dismiss="modal" data-toggle="modal" (click)="onSaveNewQuotationPreferential()">Sí</button>
+                <button class="btn btn-not" data-dismiss="modal" [routerLink]="['/quote/new-quotation']">No</button>
+            </div>
+        </div>
+    </div>
+</div>

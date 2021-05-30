@@ -1,0 +1,108 @@
+<div class="container-principal">
+    <img class="icon-logo d-none d-lg-block logo" src="assets/icons/loguito.png" alt="icon-landscape" />
+    <div class="container-header d-lg-block d-none animated">
+        <app-header></app-header>
+    </div>
+    <div class="container-header-nav">
+        <app-header-nav></app-header-nav>
+    </div>
+
+    <div *ngIf="loadingHistory === true" class="lds-default">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <div *ngIf="loadingHistory === false" class="container-history-quotation">
+        <div class="w-100  header animated fadeIn">
+            <p class="p-3 header__item">Historial de la cotización: ID {{quotationHistoryId.quotationId}}</p>
+        </div>
+        <div class=" container-history" *ngFor="let history of objQuotationHistory;" [ngClass]="{'d-none': history.stateActionName == null}">
+            <div>
+
+                <div class="col vertical-line"></div>
+                <div class="rounded-circle circle-in-line"></div>
+                <div class="d-flex">
+                    <div class="rounded-circle mt-5 ml-2 circle-state">
+                        <span class="state-letter d-flex justify-content-center">{{history.abbreviationStatus}}</span>
+                        <span *ngIf="history.statusId === 3" class=" main-section__circle mt-2 rounded-circle "></span>
+                    </div>
+
+                    <div class="position-absolute rounded quote-content">
+                        <label class="float-right px-2 pt-1 m-0 quote-content-date">{{history.creationDate | date:'medium'}}</label>
+                        <div class="d-inline-flex mt-0 w-100 pl-2 quote-content--header">
+                            <h3 class="quote-content--name">{{history.nameEmployee | uppercase}} {{history.firstSurnameEmployee | uppercase}}</h3>
+                            <label class="quote-content--state ml-2">{{history.stateActionName | stateQuote}}</label>
+                        </div>
+                        <div class="d-flex justify-content-around">
+                            <div class="d-flex flex-column quote-content-rate align-items-start px-2">
+                                <div class="d-flex justify-content-start align-item-start tem-request__item">
+                                    <span class="">TEMNGC:</span>
+                                    <span class="pl-1">{{history.quotedRate | customAmount}}%</span>
+                                </div>
+                                <div class="d-flex justify-content-start align-item-start">
+                                    <span class="">TEMSGR:</span>
+                                    <span class="pl-1" *ngIf="history.requestedRate !== null ">{{history.requestedRate | customAmount}} %</span>
+                                    <span class="pl-1" *ngIf="history.requestedRate === null">--</span>
+                                </div>
+                                <div class="d-flex justify-content-start align-item-start">
+                                    <span class="">TEMAPB:</span>
+                                    <span class="pl-1" *ngIf="history.approvedRate !== null">{{history.approvedRate | customAmount}} %</span>
+                                    <span class="pl-1" *ngIf="history.approvedRate === null">--</span>
+                                </div>
+                            </div>
+                            <div *ngIf="fileLength !== 0 && history.comment !== '' && history.positionId  === 1">
+                                <button type=" button " class="btn btn-attach-file p-0 " (click)="fileQuotation(history.quotationId) ">
+                                <img class="image-attach-file " src="assets/icons/attach_active.png " />
+                            </button>
+                            </div>
+                            <!-- <button type="button" class="btn btn-see-comment p-1 m-auto" data-toggle="modal" data-target="#modalComment" (click)=verComentario(history.id)>Ver comentario</button> -->
+                            <button type="button" class="btn btn-see-comment p-1 m-auto" data-toggle="modal" data-target="#modalComment" (click)=verComentario(history.id) [className]="history.comment === '' || history.comment ===null ? 'btn-disabled': ''">Ver comentario</button>
+
+                            <div class="modal fade" id="modalComment" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true" *ngFor="let comment of quotationHistoryComment">
+                                <div class="modal-dialog" role="document">
+                                    <div *ngIf="comment.comment !== '' && comment.comment !== null" class="modal-content">
+                                        <div class="modal-header main-modal-header">
+                                            <p class="modal-title mx-auto pt-3 pb-1" id="exampleModalScrollableTitle" *ngIf="comment.positionId === 1">{{comment.nameEmployee | uppercase}} {{comment.firstSurnameEmployee | uppercase}} / ASESOR</p>
+                                            <p class="modal-title mx-auto pt-3 pb-1" id="exampleModalScrollableTitle" *ngIf="comment.positionId === 2">{{comment.nameEmployee | uppercase}} {{comment.firstSurnameEmployee | uppercase}} / JEFE DE CRÉDITOS</p>
+                                            <p class="modal-title mx-auto pt-3 pb-1" id="exampleModalScrollableTitle" *ngIf="comment.positionId === 3">{{comment.nameEmployee | uppercase}} {{comment.firstSurnameEmployee | uppercase}} / GERENTE DE AGENCIA</p>
+                                            <p class="modal-title mx-auto pt-3 pb-1" id="exampleModalScrollableTitle" *ngIf="comment.positionId === 4">{{comment.nameEmployee | uppercase}} {{comment.firstSurnameEmployee | uppercase}} / GERENTE REGIONAL</p>
+                                            <p class="modal-title mx-auto pt-3 pb-1" id="exampleModalScrollableTitle" *ngIf="comment.positionId === 5">{{comment.nameEmployee | uppercase}} {{comment.firstSurnameEmployee | uppercase}} / GERENTE DIVISIONAL</p>
+                                            <p class="modal-title mx-auto pt-3 pb-1" id="exampleModalScrollableTitle" *ngIf="comment.positionId === 6">{{comment.nameEmployee | uppercase}} {{comment.firstSurnameEmployee | uppercase}} / GERENTE DE CRÉDITO INDIVIDUAL</p>
+                                            <button type="button" class="close" data-dismiss="modal">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                        </div>
+                                        <div class="modal-body p-3">
+                                            <p class="text-justify modal-body__p">{{comment.comment}}</p>
+                                            <div class="text-center d-lg-none d-block">
+                                                <button class="main-modal-btn" type="button" data-dismiss="modal">Cerrar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="comment.comment === '' || comment.comment === null" class="modal-content">
+                                        <div class="text-center modal-content__item p-3 main-modal-header">
+                                            <p>No se agregaron comentarios.</p>
+                                        </div>
+                                        <div class="text-center pb-3">
+                                            <button class="main-modal-btn mt-3" type="button" data-dismiss="modal">Cerrar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

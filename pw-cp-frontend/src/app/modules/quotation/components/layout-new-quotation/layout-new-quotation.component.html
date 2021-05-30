@@ -1,0 +1,41 @@
+<div *ngIf="loadingQuotation === true" class="lds-default mt-5">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+<!-- <div *ngIf="loadingQuotation === false" class="container-data ">
+    <app-data-client></app-data-client>
+    <app-data-product></app-data-product>
+    <app-data-loan></app-data-loan>
+    <app-data-rate></app-data-rate>
+</div> -->
+
+<!-- <div *ngIf="loadingQuotation === false" class="container-data d-md-none">
+    <app-data-client></app-data-client>
+    <app-data-product></app-data-product>
+    <app-data-loan></app-data-loan>
+    <app-data-rate></app-data-rate>
+</div> -->
+
+<div class="" *ngIf="loadingQuotation === false">
+    <app-data-client></app-data-client>
+    <div class="d-lg-flex container-product-loan-rate mt-lg-2 ">
+        <div class="col-product-loan">
+            <app-data-product></app-data-product>
+            <app-data-loan></app-data-loan>
+        </div>
+        <div class="col-rate">
+            <app-data-rate></app-data-rate>
+        </div>
+    </div>
+    <app-rate-preferential class="col preferential"></app-rate-preferential>
+</div>

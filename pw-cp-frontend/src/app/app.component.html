@@ -1,0 +1,40 @@
+<router-outlet (activate)="onActivate()">
+</router-outlet>
+
+<div *ngIf="activeUser === true" class="container-logout animated fadeIn" data-backdrop="true" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body d-block">
+                <div>
+                    <img class="img-alert pt-2" src="assets/icons/alert.png" alt="alert">
+                </div>
+                <div>
+                    <p class="text pt-5">Tu sesión ha expirado</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-alert" data-dismiss="modal" (click)="closeModal()">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <router-outlet (activate)="onActivate()"></router-outlet>
+
+<div *ngIf="activeUser === true" class="container-logout animated fadeIn" data-backdrop="true" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body d-block">
+                <div>
+                    <img class="img-alert pt-2" src="assets/icons/alert.png" alt="alert">
+                </div>
+                <div>
+                    <p class="text pt-5">Tu sesión ha expirado</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-alert" data-dismiss="modal" (click)="closeModal()">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div> -->

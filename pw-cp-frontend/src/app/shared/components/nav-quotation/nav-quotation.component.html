@@ -1,0 +1,20 @@
+<div class="barra-nav animated">
+    <div class="button-nav new-quotation">
+        <button type="button" routerLinkActive="active" [className]="activeBtnNewQuotation ?  'btn btn-new-quotation active d-lg-none' : 'btn btn-new-quotation inactive d-lg-none'" (click)="onClickQuotation()">
+            NUEVA COTIZACIÓN
+        </button>
+        <button type="button" routerLinkActive="active" [className]="activeBtnNewQuotation ?  'btn btn-new-quotation active d-none d-lg-inline-block' : 'btn btn-new-quotation inactive d-none d-lg-inline-block'" (click)="onClickQuotation()">
+            COTIZACIÓN
+        </button>
+        <div *ngIf="activeBtnNewQuotation ? true : false" class="active-new-quotation "></div>
+    </div>
+    <div class="button-nav quotes-tray">
+        <button type="button" routerLinkActive="active" [className]="activeBtnQuoteInbox ? 'btn btn-quotes-tray active d-lg-none' : 'btn btn-quotes-tray inactive d-lg-none'" (click)="onClickQuoteInbox()">
+            BANDEJA DE COTIZACIONES 
+        </button>
+        <button type="button" routerLinkActive="active" [className]="activeBtnQuoteInbox ? 'btn btn-quotes-tray active d-none d-lg-inline-block' : 'btn btn-quotes-tray inactive d-none d-lg-inline-block'" (click)="onClickQuoteInbox()">
+            BANDEJA
+        </button>
+        <div *ngIf="activeBtnQuoteInbox ? true : false" class="active-new-quotation"></div>
+    </div>
+</div>

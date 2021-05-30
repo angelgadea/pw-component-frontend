@@ -1,0 +1,302 @@
+@font-face {
+    font-family: ubuntu-regular;
+    src: url(../../../../assets/fonts/Ubuntu-Regular.ttf);
+}
+
+@font-face {
+    font-family: titilliumweb-regular;
+    src: url(../../../../assets/fonts/TitilliumWeb-Regular.ttf);
+}
+
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.fast {
+    -webkit-animation-duration: 0.4s;
+    animation-duration: 0.4s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    animation-name: fadeIn;
+}
+
+
+/* for smartphone */
+
+@media (min-width: 300px) {
+    .container-footer {
+        position: fixed;
+        bottom: 0px;
+        width: 100%;
+        height: 75px;
+        background: #CDDADE;
+        display: flex;
+    }
+    .button-footer {
+        width: 70px;
+        height: 60px;
+        background: #CA005D;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 10px;
+        margin: auto;
+    }
+    .btn-footer {
+        font-family: ubuntu-regular, Arial, Helvetica, sans-serif;
+        font-style: normal;
+        font-weight: 300;
+        font-size: 14px;
+        align-items: center;
+        text-align: center;
+        letter-spacing: -1px;
+        color: #FFFFFF;
+        box-shadow: none;
+        border: none;
+    }
+    .btn-footer--inactive {
+        color: #B390B1;
+    }
+    .button-footer .img-btn {
+        width: 30px;
+    }
+    .modal-content {
+        border-radius: 15px;
+    }
+    .modal-header {
+        background-color: #CA005D;
+        padding-top: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        font-family: titilliumweb-regular, Arial, Helvetica, sans-serif;
+        font-style: normal;
+        font-size: 18px;
+        letter-spacing: -0.5px;
+        font-weight: 600;
+    }
+    .main-modal-header__btn-close {
+        position: relative;
+        top: -10px;
+        border: none;
+        text-decoration: none;
+        background-color: transparent;
+    }
+    .main-modal-header__span-close {
+        font-size: 35px;
+        line-height: 1;
+        color: #ffffff;
+    }
+    .main-modal-p {
+        font-family: titilliumweb-regular, Arial, Helvetica, sans-serif;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        letter-spacing: -0.5px;
+        text-align: center;
+        color: #83786F;
+    }
+    .main-modal-rates {
+        font-family: titilliumweb-regular, Arial, Helvetica, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13px;
+        letter-spacing: -0.5px;
+        color: #83786F;
+        text-align: center;
+    }
+    .main-modal-rates__fee {
+        font-size: 13.5px;
+    }
+    .main-modal-rates--negotiated {
+        width: 30%;
+    }
+    .main-modal-rates--tem-negotiated {
+        font-size: 13px;
+        color: #910048;
+        font-weight: bold;
+    }
+    .main-modal-rates__input {
+        width: 100%;
+        height: 52px;
+        border: 4px solid #910048;
+        border-radius: 3px;
+        text-align: center;
+        font-family: titilliumweb-regular, Arial, Helvetica, sans-serif;
+        color: #83786F;
+        font-size: 15px;
+    }
+    .custom-control-input:checked~.custom-control-label::before {
+        color: #fff;
+        border-color: #910048;
+        background-color: #910048;
+    }
+    .custom-switch .custom-control-label::before {
+        width: 2rem;
+    }
+    .custom-control-label::before {
+        height: 1.1rem;
+    }
+    .custom-switch .custom-control-input:checked~.custom-control-label::after {
+        -webkit-transform: translateX(1rem);
+        transform: translateX(1rem);
+    }
+    .custom-switch .custom-control-label::after {
+        top: calc(.29rem + 2px);
+    }
+    .custom-control-label {
+        position: relative;
+        margin-bottom: 0;
+        vertical-align: top;
+        font-family: titilliumweb-regular, Arial, Helvetica, sans-serif;
+        font-size: 13.5px;
+    }
+    .main-modal-rates__tem {
+        background: #fde9f1;
+        border-radius: 2px;
+        font-size: 15px;
+    }
+    .main-modal__textarea {
+        width: 100%;
+        height: 175px;
+        background: #FFFFFF;
+        border-radius: 2px;
+    }
+    .main-modal-p--support {
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 24px;
+        text-align: justify;
+    }
+    .main-modal-btn {
+        font-family: ubuntu-regular, Arial, Helvetica, sans-serif;
+        color: #ffffff;
+        font-weight: 500;
+        font-size: 17px;
+        background: #CA005D;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 10px;
+        height: 40px;
+    }
+    .main-modal-rates__input:valid {
+        background-color: #CA005D;
+    }
+    /* modal after downloadpdf */
+    .modal-content {
+        border: none;
+        text-align: center;
+        padding: 0px;
+        width: 226px;
+        height: 290px;
+        background: #EEEDEB;
+        border-radius: 20px;
+        margin: 0 auto;
+    }
+    .modal-body {
+        padding-top: 40px;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 16px;
+        display: block;
+        align-items: center;
+        text-align: center;
+        letter-spacing: -0.5px;
+        color: #83786F;
+    }
+    .modal-body .body-subtitle {
+        padding-top: 20px;
+    }
+    .modal-footer {
+        border: none;
+        margin: auto;
+        padding-top: 0;
+    }
+    .modal-footer .btn-yes {
+        font-family: ubuntu-regular, Arial, Helvetica, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        text-align: center;
+        color: #ffffff;
+        width: 63px;
+        height: 40px;
+        background: #CE0058;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 10px;
+    }
+    .modal-footer .btn-not {
+        font-family: ubuntu-regular, Arial, Helvetica, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        text-align: center;
+        color: #83786F;
+        width: 63px;
+        height: 40px;
+        border: 2px solid #83786F;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 10px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container-footer {
+        background-color: #e5e5e5;
+        position: relative;
+    }
+    .button-footer {
+        width: 200px;
+        height: 42px;
+    }
+    .btn-footer {
+        font-size: 18px;
+        margin: auto;
+        display: inherit;
+    }
+    .button-footer .img-btn {
+        width: 30px;
+    }
+    .btn-history {
+        position: absolute;
+        left: 8%;
+        top: 16px;
+        width: 200px
+    }
+    .btn-negotiate {
+        position: absolute;
+        left: 30%;
+        top: 16px;
+        width: 200px;
+    }
+    .btn-scalar {
+        position: absolute;
+        left: 52%;
+        top: 16px;
+        width: 200px
+    }
+}
+
+@media (min-width: 1200px) {
+    .btn-history {
+        left: 12%
+    }
+    .btn-negotiate {
+        left: 31%;
+    }
+    .btn-scalar {
+        left: 50%;
+    }
+}

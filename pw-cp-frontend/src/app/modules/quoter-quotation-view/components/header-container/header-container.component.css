@@ -1,0 +1,145 @@
+@font-face {
+    font-family: titilliumweb-regular;
+    src: url(../../../../../assets/fonts/TitilliumWeb-Regular.ttf);
+}
+
+@font-face {
+    font-family: ubuntu-regular;
+    src: url(../../../../../assets/fonts/Ubuntu-Regular.ttf);
+}
+
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.fast {
+    -webkit-animation-duration: 0.4s;
+    animation-duration: 0.4s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    animation-name: fadeIn;
+}
+
+
+/* for smartphone */
+
+@media(min-width:300px) {
+    .summary-quotation {
+        height: 30px;
+        background-color: #2E2E38;
+        color: #ffffff;
+        text-align: center;
+        padding: 3px;
+    }
+    .container-quote-summary-header {
+        background-color: #CA005D;
+        height: 86px;
+    }
+    .text-size {
+        font-size: 14px;
+    }
+    .text-size--border {
+        border-top: 1px solid #CA005D;
+    }
+    .text-size-quotation-id {
+        font-size: 14px;
+        padding-top: 3px;
+    }
+    .container-summary-header-inf {
+        font-family: titilliumweb-regular, Arial, Helvetica, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        line-height: 24px;
+        letter-spacing: -0.5px;
+        text-indent: 5px;
+        /* height: 56px; */
+        height: 60px;
+        color: #83786F;
+        width: 95%;
+    }
+    .container-col-one {
+        width: 12%;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        text-align: center;
+        border-right: 1px solid #CA005D;
+        padding: 5px;
+        font-weight: 600;
+    }
+    .container-col-two {
+        width: 44%;
+    }
+    .container-col-three {
+        background-color: #CDDADE;
+        width: 44%;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        text-align: center;
+    }
+    /* .text-height {
+        height: 29px;
+        padding-top: 3px;
+    } */
+    .text-padding {
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
+}
+
+@media(min-width:992px) {
+    .container-quote-summary-header-lg {
+        background-color: #91004B;
+        height: 140px;
+    }
+    .container-quote-summary-header {
+        background-color: #91004B;
+        width: 59%;
+    }
+    .summary-quotation {
+        font-family: ubuntu-regular, Arial, Helvetica, sans-serif;
+        background-color: #91004B;
+        font-size: 24px;
+    }
+    .text-size {
+        font-size: 20px;
+        padding: 10px;
+    }
+    .text-size-quotation-id {
+        font-size: 20px;
+        padding-top: 5px;
+    }
+    .container-summary-header-inf {
+        height: 90px;
+        width: 100%;
+    }
+    .text-size--border {
+        border-top: 2px solid #CA005D;
+    }
+    .container-col-one {
+        border-right: 2px solid #CA005D;
+    }
+    .text-quote-summary {
+        padding-left: 30px;
+    }
+}
+
+@media(min-width:1200px) {
+    .container-quote-summary-header {
+        padding-right: 5%;
+    }
+}

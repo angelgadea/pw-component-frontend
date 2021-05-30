@@ -1,0 +1,49 @@
+<div class="animated fadeIn  d-lg-flex align-items-lg-center justify-content-lg-start container-login ">
+
+    <div class="col-lg-7 container-logo d-flex justify-content-center">
+        <app-logo></app-logo>
+    </div>
+
+    <div class="container-form-login">
+        <form #form="ngForm">
+
+            <div>
+                <p class="container-form-login__title">
+                    <span class="container-form-login__title--bold">Ingresar</span> a mi sesión
+                </p>
+            </div>
+
+            <div *ngIf="formControl === true" class="container-form-login__text-validation">
+                Usuario o contraseña no válidos
+            </div>
+
+            <div class="col container-user px-0">
+                <img *ngIf="formControl === false" src="assets/icons/man_user.png" class="container-user__icon-user " alt="user" />
+                <img *ngIf="formControl === true" src="assets/icons/man_user_bug.png" class="container-user__icon-user container-user__icon-user--bug " alt="user-bug" />
+                <img *ngIf="formControl === true" src="assets/icons/alert_bug.png" class="icon-alert-bug " alt="alert-bug" />
+                <input type="text" [className]="formControl ? 'container-user__input container-user__input--error' : 'container-user__input'" placeholder="Usuario" minlength="3" [(ngModel)]="dataUser.user" name="user" />
+            </div>
+
+            <div class="col container-password px-0">
+                <img *ngIf="formControl === false" src="assets/icons/lock.png" class="container-password__icon-lock" alt="lock" />
+                <img *ngIf="formControl === true" src="assets/icons/lock_bug.png" class="container-password__icon-lock container-password__icon-lock--bug" alt="lock-bug" />
+                <img *ngIf="formControl === true" src="assets/icons/alert_bug.png" class="icon-alert-bug icon-alert-bug--password" alt="alert-bug" />
+                <input [type]="isShowPassword ? 'text' : 'password'" [className]="formControl ? 'container-user__input container-user__input--error' : 'container-user__input'" placeholder="Contraseña" minlength="8" maxlength="20" [(ngModel)]="dataUser.password" name="password"
+                />
+
+                <button *ngIf="isShowPassword === false && formControl === false" type="button" class="btn btn-icon-eye" (click)="showPassword()">
+                   <img src="assets/icons/eye.png" class="btn-icon-eye__icon-eye" alt="eye-bug"/>
+                </button>
+
+                <button *ngIf="isShowPassword === true && formControl === false " type="button" class="btn btn-icon-eye" (click)="showPassword()">
+                    <img src="assets/icons/eye_show.png" class="btn-icon-eye__icon-eye" alt="eye"/>
+                 </button>
+
+                <a class="container-password__link-password" routerLink="/change-forgotten-password">Olvidé mi contraseña</a>
+            </div>
+
+            <button type="button" class="btn enter-login" (click)="onLogin(form)">Ingresar</button>
+        </form>
+    </div>
+
+</div>

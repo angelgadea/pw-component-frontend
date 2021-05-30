@@ -1,0 +1,14 @@
+.container-layout {
+    background: #EFEDEB;
+}
+
+.header {
+    width: 100%;
+    position: fixed;
+    z-index: 100;
+    height: 83px;
+}
+
+.container-quoter {
+    padding-top: 83px;
+}

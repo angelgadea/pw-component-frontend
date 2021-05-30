@@ -1,0 +1,72 @@
+@font-face {
+    font-family: titilliumweb-regular;
+    src: url(../../../../../assets/fonts/TitilliumWeb-Regular.ttf);
+}
+
+@font-face {
+    font-family: ubuntu-regular;
+    src: url(../../../../../assets/fonts/Ubuntu-Regular.ttf);
+}
+
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.fast {
+    -webkit-animation-duration: 0.4s;
+    animation-duration: 0.4s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    animation-name: fadeIn;
+}
+
+.main-system-error {
+    height: 100vh;
+    background: linear-gradient(179.04deg, #438496 63.97%, rgba(118, 143, 194, 0.769553) 85.04%, rgba(140, 147, 214, 0.67) 100.63%);
+}
+
+.main-system-error__img {
+    max-width: 100%;
+}
+
+.main-system__title {
+    font-family: titilliumweb-regular, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 27px;
+    color: #ffffff;
+    height: 50px;
+}
+
+.main-system__btn {
+    font-family: ubuntu-regular, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 23px;
+    position: fixed;
+    bottom: 20%;
+    width: 147px;
+    height: 50px;
+    border: 1px solid #c0c0c0;
+    color: #438496;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+    background-color: #ffffff;
+}

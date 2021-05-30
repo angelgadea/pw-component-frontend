@@ -1,0 +1,26 @@
+<div class="barra-nav animated d-flex justify-content-around align-items-center">
+    <div *ngIf="dataUser.roleName === 'COTIZADOR'" class="button-nav new-quotation ">
+        <button type="button" class="btn btn-new-quotation d-lg-none d-block" (click)="stateNavigationNewQuotation()">
+            NUEVA COTIZACIÓN
+        </button>
+        <button type="button" class="btn btn-new-quotation d-lg-block d-none" (click)="stateNavigationNewQuotation()">
+            Nueva Cotización
+        </button>
+    </div>
+    <div *ngIf="dataUser.roleName === 'COTIZADOR'" class="button-nav quotes-tray ">
+        <button type="button" class="btn btn-quotes-tray d-lg-none d-block" (click)="stateNavigationViewQuote()">
+            BANDEJA DE COTIZACIONES
+        </button>
+        <button type="button" class="btn btn-quotes-tray d-lg-block d-none" (click)="stateNavigationViewQuote()">
+            Bandeja de Cotizaciones
+        </button>
+    </div>
+    <div *ngIf="dataUser.roleName === 'APROBADOR'" class="button-nav__approver quotes-tray w-100">
+        <button type="button" class="btn btn-quotes-tray__approver d-lg-none d-block" (click)="stateNavigationViewQuote()">
+            BANDEJA DE COTIZACIONES
+        </button>
+        <button type="button" class="btn btn-quotes-tray__approver d-lg-block d-none" (click)="stateNavigationViewQuote()">
+            Bandeja de Cotizaciones
+        </button>
+    </div>
+</div>

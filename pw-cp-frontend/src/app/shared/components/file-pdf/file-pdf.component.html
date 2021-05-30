@@ -1,0 +1,136 @@
+<table id=tabla-1>
+    <tbody>
+        <tr>
+            <td colspan="6">FICHA DE APROBACIÓN DE PRECIOS</td>
+        </tr>
+    </tbody>
+</table>
+<table id="tabla0">
+    <tbody>
+        <tr>
+            <td>ID de cotización</td>
+            <td>:</td>
+            <td>{{showData.quotationId}}</td>
+            <td>Fecha de impresión</td>
+            <td>:</td>
+            <td>{{dateCurrent}}</td>
+        </tr>
+        <tr>
+            <td>Fecha de aprobación</td>
+            <td>:</td>
+            <!-- <td>{{showData.dateDisbursement}}</td> -->
+            <td>{{newFormatDateDisbursement}}</td>
+            <td>Vigencia hasta</td>
+            <td>:</td>
+            <td>{{effectiveDate}}</td>
+        </tr>
+        <tr>
+            <td>Código de oficina</td>
+            <td>:</td>
+            <td>{{showData.officeId}}</td>
+            <td>Nombre de oficina</td>
+            <td>:</td>
+            <td>{{showData.officeName}}</td>
+        </tr>
+        <tr>
+            <td>Registro del Asesor</td>
+            <td>:</td>
+            <td>{{showData.currentQuoteCode}}</td>
+            <td>Nombre del Asesor</td>
+            <td>:</td>
+            <td>{{showData.currentQuoteNameEmployee}}</td>
+        </tr>
+    </tbody>
+</table>
+<table id="tabla1" class="d-none">
+    <thead>
+        <tr>
+            <th colspan="5">DATOS DEL CLIENTE</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>Código cliente</th>
+            <th>Tipo de documento</th>
+            <th>Número de documento</th>
+            <th>Segmento</th>
+            <th>Score</th>
+        </tr>
+        <tr>
+            <td>{{showData.customerCode}}</td>
+            <td *ngIf="showData.documentType === 1">DNI</td>
+            <td *ngIf="showData.documentType === 2">RUC</td>
+            <td *ngIf="showData.documentType === 3">PASAPORTE</td>
+            <td *ngIf="showData.documentType === 4">CARNET DE EXTRANJERÍA</td>
+            <td>{{showData.numberDocument}}</td>
+            <td>{{showData.basicSegment}}</td>
+            <td>{{showData.riskLevel}}</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan=5>Nombre del cliente: {{showData.nameBusinessNameClient}}</td>
+        </tr>
+    </tfoot>
+</table>
+<table id="tabla2" class="d-none">
+    <thead>
+        <tr>
+            <th colspan="5">DATOS DE LA OPERACIÓN</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>Producto</th>
+            <th>Modalidad</th>
+            <th>Moneda</th>
+            <th>Monto del préstamo</th>
+            <th>Plazo</th>
+        </tr>
+        <tr>
+            <td>{{showData.product | titlecase}}</td>
+            <td>{{showData.mode | titlecase}}</td>
+            <td>{{showData.currencyName | titlecase}}</td>
+            <td>{{showData.loanAmount}}</td>
+            <td>{{period}} Meses</td>
+        </tr>
+        <tr>
+            <th>Garantía</th>
+            <th>Seguro</th>
+            <th>Tasa preferencial</th>
+            <th>Tasa Óptima</th>
+            <th>Tasa del producto</th>
+        </tr>
+        <tr>
+            <td *ngIf="showData.warrantyId === 1">Sin garantía</td>
+            <td *ngIf="showData.warrantyId === 2">Con garantía</td>
+            <td>{{showData.insuranceName | titlecase}}</td>
+            <td *ngIf="showData.comment === null">No</td>
+            <td *ngIf="showData.comment !== null">Sí</td>
+            <td bordercolor="#ffeb3b">{{showData.optimalRate | customAmount}} %</td>
+            <td bordercolor="#ffeb3b">{{showData.approvedRate | customAmount}} %</td>
+        </tr>
+    </tbody>
+</table>
+<table id="tabla3">
+    <thead>
+        <tr>
+            <th colspan="2">DATOS DEL APROBADOR</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Nombre del Aprobador: </td>
+            <td>{{showData.currentQuoteApproverNameEmployee}}</td>
+        </tr>
+        <tr>
+            <td>Cargo del Aprobador: </td>
+            <td *ngIf="showData.statusId === 1">Asesor</td>
+            <td *ngIf="showData.currentQuoteApproverPositionId === 2">Jefe de Créditos</td>
+            <td *ngIf="showData.currentQuoteApproverPositionId === 3">Gerente de Agencia</td>
+            <td *ngIf="showData.currentQuoteApproverPositionId === 4">Gerente Regional</td>
+            <td *ngIf="showData.currentQuoteApproverPositionId === 5">Gerente Divisonal</td>
+            <td *ngIf="showData.currentQuoteApproverPositionId === 6">Gerente de Crédito Individual</td>
+        </tr>
+    </tbody>
+</table>

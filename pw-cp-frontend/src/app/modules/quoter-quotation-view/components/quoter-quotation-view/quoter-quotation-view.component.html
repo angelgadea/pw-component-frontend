@@ -1,0 +1,552 @@
+<div *ngIf="loadingQuoteSummary === true" class="lds-default">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+
+
+<div *ngIf="loadingQuoteSummary === false" class="quotation-summary d-block d-lg-none">
+    <div class="container-quotation-sumary  mt-4">
+        <div class="d-flex justify-content-around align-items-center mb-3 mt-2">
+            <div class="col-6 pr-0">
+                <h3 class="title mb-0">Datos del Cliente</h3>
+            </div>
+            <div class="col-6">
+                <img class="steper-active-img" src="assets/icons/steper_one.png" alt="steper1" />
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-around align-items-center">
+            <div class="col-6 pr-2">
+                <p class="subtitle mb-0">Tipo de documento</p>
+                <span *ngIf="showData.documentType === 1" type="text" class="data-quotation">DNI</span>
+                <span *ngIf="showData.documentType === 2" type="text" class="data-quotation">RUC</span>
+                <span *ngIf="showData.documentType === 3" type="text" class="data-quotation">PASAPORTE</span>
+                <span *ngIf="showData.documentType === 4" type="text" class="data-quotation">CARNET DE EXTRANJERÍA</span>
+            </div>
+            <div class="col-6 pl-2">
+                <p class="subtitle mb-0">Número de documento</p>
+                <span class="data-quotation">{{ showData.numberDocument }}</span>
+            </div>
+        </div>
+
+        <div *ngIf="showData.newCustomer === 0" class="d-flex justify-content-around align-items-end mt-3">
+            <div class="col-7">
+                <div class="container-img d-flex justify-content-around align-items-center">
+                    <div class="col-5 pr-3 text-right">
+                        <img src="assets/icons/client_bank_view.png" class="img-bank" alt="client" />
+                    </div>
+                    <div class="col-7 pl-1">
+                        <h3 class="title title--img mb-0">Cliente</h3>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-5 pl-0">
+                <p class="subtitle mb-0">Código del cliente</p>
+                <span class="data-quotation">{{ showData.customerCode }}</span>
+            </div>
+        </div>
+
+        <div *ngIf="showData.newCustomer === 1" class="d-flex justify-content-around align-items-end mt-3">
+            <div class="col-7">
+                <div class="container-img d-flex justify-content-around align-items-center">
+                    <div class="col-5 pr-3 text-right">
+                        <img src="assets/icons/no_client_bank.png" class="img-bank" alt="client" />
+                    </div>
+                    <div class="col-7 px-0">
+                        <h3 class="title title--img-no-client mb-0">No Cliente</h3>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-5">
+                <p class="subtitle mb-0">Código del cliente</p>
+                <span class="data-quotation">{{ showData.customerCode }}</span>
+            </div>
+        </div>
+
+
+        <div class="px-3 mt-3">
+            <p class="subtitle mb-0 ">Nombre / Razón social del cliente</p>
+            <span class="data-quotation">{{ showData.nameBusinessNameClient }}</span>
+        </div>
+
+        <div class="mt-3">
+            <!-- <div class="col-8 pr-2 ">
+                <p class="subtitle mb-0 ">Segmento</p>
+                <span class="data-quotation"></span>
+            </div> -->
+            <div class="col-12 ">
+                <p class="subtitle mb-0 ">Score</p>
+                <span class="data-quotation text-center">{{ showData.riskLevel }}</span>
+            </div>
+        </div>
+
+        <div *ngIf="showData.newCustomer === 0" class="d-flex mt-3 ">
+            <div class="col-6 pr-2 ">
+                <p class="subtitle subtitle--spacing mb-0 ">Tasa de desembolso anterior</p>
+                <span class="data-quotation">{{ showData.disbursementRate | customAmount }} %</span>
+            </div>
+            <div class="col-6 pl-2">
+                <p class="subtitle subtitle--spacing mb-0 ">Monto de desembolso anterior</p>
+                <span class="data-quotation">S/ {{ showData.disbursementAmount | customAmount }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-quotation-sumary mt-4">
+        <div class="d-flex justify-content-around align-items-center mb-3 mt-2">
+            <div class="col-6 pr-0">
+                <h3 class="title mb-0">Datos del Producto</h3>
+            </div>
+            <div class="col-6">
+                <img class="steper-active-img" src="assets/icons/steper_two.png" alt="steper1" />
+            </div>
+        </div>
+
+        <div class="d-flex mt-3 ">
+            <div class="col-6 pr-2 ">
+                <p class="subtitle subtitle--spacing mb-0 ">Producto</p>
+                <span class="data-quotation">{{ showData.product }}</span>
+            </div>
+            <div class="col-6 pl-2">
+                <p class="subtitle subtitle--spacing mb-0 ">Modalidad</p>
+                <span class="data-quotation">{{ showData.mode}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-quotation-sumary mt-4">
+        <div class="d-flex justify-content-around align-items-center mb-3 mt-2">
+            <div class="col-6 pr-0">
+                <h3 class="title mb-0">Datos del Préstamo</h3>
+            </div>
+            <div class="col-6">
+                <img class="steper-active-img" src="assets/icons/steper_three.png" alt="steper1" />
+            </div>
+        </div>
+        <div class="d-flex mt-3 ">
+            <div class="col-5 pr-2 ">
+                <p class="subtitle subtitle--spacing mb-0 ">Moneda</p>
+                <span class="data-quotation">{{ showData.currencyName }}</span>
+            </div>
+            <div class="col-6 pl-2">
+                <p class="subtitle subtitle--spacing mb-0 ">Monto del préstamo</p>
+                <span class="data-quotation">{{ showData.loanAmount | customAmount }}</span>
+            </div>
+        </div>
+        <div class="d-flex mt-3 ">
+            <div class="col-6 pr-2 ">
+                <p class="subtitle subtitle--spacing mb-0 ">Plazo</p>
+                <div class="d-flex justify-content-between">
+                    <span class="col-8 data-quotation mr-1">Meses</span>
+                    <span class="col-4 data-quotation">{{ period }}</span>
+                </div>
+
+            </div>
+            <div class="col-6 pl-2">
+                <p class="subtitle subtitle--spacing mb-0 ">Garantía</p>
+                <span *ngIf="showData.warrantyId === 1" class="data-quotation">Sin garantía</span>
+                <span *ngIf="showData.warrantyId === 2" class="data-quotation">Con garantía</span>
+
+            </div>
+        </div>
+
+        <div class="d-flex mt-3 ">
+            <div class="col-7 pr-2 ">
+                <p class="subtitle subtitle--spacing mb-0 ">Fecha de desembolso</p>
+                <span class="data-quotation">{{ showData.dateDisbursement | date:'dd/MM/yyyy'}}</span>
+            </div>
+            <div class="col-5 pl-2">
+                <p class="subtitle subtitle--spacing mb-0 ">Día de pago</p>
+                <span class="data-quotation">{{ showData.paysDay }}</span>
+            </div>
+        </div>
+        <div class="px-3 mt-3">
+            <p class="subtitle mb-0 ">Seguro de protección</p>
+            <span class="data-quotation">{{ showData.insuranceName}}</span>
+        </div>
+
+
+
+    </div>
+
+    <div class="container-quotation-sumary mt-4">
+        <div class="d-flex justify-content-around align-items-center mb-3 mt-2">
+            <div class="col-6 pr-0">
+                <h3 class="title mb-0">Tasa del Producto</h3>
+            </div>
+            <div class="col-6">
+                <img class="steper-active-img" src="assets/icons/steper_four.png" alt="steper1" />
+            </div>
+        </div>
+
+        <div class="d-flex mt-3 ">
+            <div class="col-4 pr-2 ">
+                <p class="subtitle mb-0 ">TEM Base</p>
+                <span class="data-quotation data-quotation--rate">{{ showData.minRate | customAmount }} %</span>
+            </div>
+            <div class="col-4 px-2">
+                <p class="subtitle  mb-0 ">TEM Tarifario</p>
+                <span class="data-quotation data-quotation--rate">{{ showData.optimalRate | customAmount }} %</span>
+            </div>
+            <div class="col-4 px-1">
+                <p class="subtitle subtitle--rate-agree mb-0">TEM Negociada</p>
+                <span class="data-quotation data-quotation--rate data-quotation--rate-agree ">{{ showData.quotedRate | customAmount }} %</span>
+            </div>
+        </div>
+        <div *ngIf="showData.firstInstallment !==null ">
+            <p class="subtitle subtitle--first-quote mb-0 ">1° cuota &nbsp; S/ {{ showData.firstInstallment | customAmount }}</p>
+        </div>
+    </div>
+
+
+    <div *ngIf="habilytiContentRatePreferential === true" class="container-quotation-sumary mt-4">
+        <div class="d-flex justify-content-around align-items-center mb-3 mt-2">
+            <div class="col-6 pr-0">
+                <h3 class="title mb-0">Solicitud de Tasa Preferencial</h3>
+            </div>
+            <div class="col-6">
+                <img class="steper-active-img" src="assets/icons/steper_five.png" alt="steper1" />
+            </div>
+        </div>
+
+        <div class="d-flex mt-3 align-items-center">
+            <div class="col-5 pr-2 ">
+                <p class="subtitle subtitle--preferential-rate-agree  mb-0 ">TEM Negociada</p>
+            </div>
+            <div class="col-4 pl-2">
+                <span class="data-quotation data-quotation--rate data-quotation--rate-agree w-100">{{ showData.quotedRate | customAmount }} %</span>
+            </div>
+        </div>
+
+        <div class="d-flex mt-3 ">
+            <div class="col">
+                <p class="subtitle mb-0">Sustento correspondiente</p>
+            </div>
+
+        </div>
+
+        <div class="d-flex mt-3 ">
+            <div class="col">
+                <span class="data-quotation data-quotation--comment">{{ showData.comment }}</span>
+            </div>
+
+        </div>
+
+        <div *ngIf="lengthFiles > 0" class="d-flex justify-content-start mt-3">
+
+            <div class="col-6 pr-0">
+                <a (click)="filesQuotation()">
+                    <img class="img-attach-file pr-1" src="assets/icons/attach_active.png" alt="attach-file" />
+                </a>
+                <span class="subtitle subtitle--see-file mb-0" (click)="filesQuotation()">Ver archivos adjuntos</span>
+            </div>
+
+            <div class="col-2 pl-1">
+                <span class="data-quotation-attach-file">{{lengthFiles}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="showData.statusId === 2 || showData.statusId === 3 || showData.statusId === 6 || showData.statusId === 7" class="container-quotation-sumary mt-4">
+        <div *ngIf="showData.statusId === 2 || showData.statusId === 3 || showData.statusId === 6 || showData.statusId === 7" class="d-flex justify-content-around align-items-center mt-2">
+            <div class="col-5 pr-2 ">
+                <p class="subtitle  mb-0">TEM APROBADA</p>
+            </div>
+            <div class="col-4 pl-2">
+                <span class="data-quotation data-quotation--rate data-quotation--rate-agree w-100">{{showData.approvedRate | customAmount}} %</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-quotation-sumary mt-4">
+        <div class="d-flex justify-content-around align-items-center mt-2">
+            <div class="col-3">
+                <p class="subtitle mb-0">Asesor</p>
+            </div>
+            <div class="col-8">
+                <p class="data-quotation data-quotation--assesor mb-0 pl-1">{{showData.currentQuoteNameEmployee}}</p>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-around align-items-center mt-2">
+            <div class="col-3">
+                <p class="subtitle mb-0">Agencia</p>
+            </div>
+            <div class="col-8 ">
+                <p class="data-quotation data-quotation--assesor mb-0 pl-1">{{dataOfUser.officeName}}</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Para desktop -->
+
+<div *ngIf="loadingQuoteSummary===false " class="main-sumary-quotation d-none  d-lg-block position-relative">
+    <div class="main-sumary-quotation__client py-lg-3 px-lg-4 ">
+
+        <p class="main-sumary-quotation__title mb-lg-0">1. Datos del Cliente</p>
+
+        <div class="d-lg-flex">
+            <div class="col-img d-lg-flex align-items-center ">
+                <div *ngIf="showData.newCustomer===0 ">
+                    <div class="main-sumary-quotation__container-img text-center ">
+                        <img src="assets/icons/client_bank_view.png " class="main-sumary-quotation__client-img " alt="client " />
+                        <p class="main-sumary-quotation__client-type text-center mb-lg-0 ">Cliente</p>
+                    </div>
+                </div>
+                <div *ngIf="showData.newCustomer===1 " class=" ">
+                    <div class="main-sumary-quotation__container-img main-sumary-quotation__container-img--no-client text-center ">
+                        <img src="assets/icons/no_client_bank.png " class="main-sumary-quotation__client-img " alt="no-client " />
+                        <p class="main-sumary-quotation__client-type main-sumary-quotation__no-client-type text-center ">No Cliente</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="">
+                <div class="d-lg-flex">
+                    <div class="col-business-name">
+                        <p class="main-sumary-quotation__subtitle mb-0 ">Nombre / Razón social del cliente</p>
+                        <input class="main-sumary-quotation__input " disabled type="text " value="{{ showData.nameBusinessNameClient }} " />
+                    </div>
+                    <div class="col-doc-type d-lg-flex">
+                        <div class="col-doc">
+                            <p class="main-sumary-quotation__subtitle mb-0 ">Documento</p>
+                            <input *ngIf="showData.documentType===1 " type="text " class="main-sumary-quotation__input main-sumary-quotation__input--doc " disabled value="DNI " />
+                            <input *ngIf="showData.documentType===2 " type="text " class="main-sumary-quotation__input main-sumary-quotation__input--doc " disabled value="RUC " />
+                            <input *ngIf="showData.documentType===3 " type="text " class="main-sumary-quotation__input main-sumary-quotation__input--doc " disabled value="PAS " />
+                            <input *ngIf="showData.documentType===4 " type="text " class="main-sumary-quotation__input main-sumary-quotation__input--doc " disabled value="CE " />
+                        </div>
+                        <div class="col-num-doc">
+                            <p class="main-sumary-quotation__subtitle mb-0 ">Número de documento</p>
+                            <input type="text " class="main-sumary-quotation__input main-sumary-quotation__input--doc w-100 " disabled value="{{ showData.numberDocument }} " />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-lg-flex pt-lg-2">
+                    <div class="col-client-seg-score d-lg-flex">
+                        <div class="col-cod-client ">
+                            <p class="main-sumary-quotation__subtitle mb-0 ">Código cliente</p>
+                            <input type="text " class="main-sumary-quotation__input " disabled value="{{ showData.customerCode }} " />
+                        </div>
+                        <div class="col-seg">
+                            <p class="main-sumary-quotation__subtitle mb-0">Segmento</p>
+                            <input type="text " class="main-sumary-quotation__input " disabled value="{{ showData.basicSegment }} " />
+                        </div>
+                        <div class="col-score">
+                            <p class="main-sumary-quotation__subtitle mb-0">Score</p>
+                            <input type="text " class="main-sumary-quotation__input " disabled value="{{ showData.riskLevel }} " />
+                        </div>
+                    </div>
+                    <div *ngIf="showData.newCustomer === 0" class="d-lg-flex col-rates">
+
+                        <div class="col-preview-rate">
+                            <p class="main-sumary-quotation__subtitle mb-0">Tasa anterior</p>
+                            <input type="text " class="main-sumary-quotation__input " disabled value="{{ showData.disbursementRate | customAmount }}%" />
+                        </div>
+                        <div class="col-preview-amount">
+                            <p class="main-sumary-quotation__subtitle mb-0">Monto anterior</p>
+                            <input type="text " class="main-sumary-quotation__input " disabled value="S/ {{ showData.disbursementAmount | customAmount }} " />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="py-lg-2 px-md-4 main-sumary-quotation__background--mod ">
+
+        <div class="row ">
+            <div class="col-product-loan-data pl-md-0  pr-lg-2">
+
+                <div class="mb-lg-2 px-md-4 py-lg-2 bg-white main-sumary-quotation__border ">
+
+                    <p class="main-sumary-quotation__title mb-0 ">2. Datos del Producto</p>
+
+                    <div class="row col-product-modality pt-lg-2">
+                        <div class="col-product ">
+                            <p class="main-sumary-quotation__subtitle mb-0">Producto</p>
+                            <input type="text " class="main-sumary-quotation__input " disabled value="{{showData.product | titlecase}} ">
+                        </div>
+                        <div class="col-modality">
+                            <p class="main-sumary-quotation__subtitle mb-0">Modalidad</p>
+                            <input type="text " class="main-sumary-quotation__input " disabled value="{{showData.mode | titlecase}} ">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="px-md-4 py-md-2 bg-white main-sumary-quotation__border ">
+
+                    <p class="main-sumary-quotation__title mb-0 ">3. Datos del Préstamo</p>
+
+                    <div class="row pt-lg-2 ">
+                        <div class="col-currency">
+
+                            <p class="main-sumary-quotation__subtitle mb-0 ">Moneda</p>
+
+                            <input type="text " disabled class="main-sumary-quotation__input " disabled value="{{showData.currencyName | titlecase}} ">
+                        </div>
+                        <div class="col-loan-amount ">
+
+                            <p class="main-sumary-quotation__subtitle mb-0 ">Monto de préstamo</p>
+
+                            <input type="text " disabled class="main-sumary-quotation__input" disabled value="{{showData.loanAmount | customAmount }} ">
+                        </div>
+                        <div class="col-time-limit ">
+
+                            <p class="main-sumary-quotation__subtitle mb-0 ">Plazo</p>
+
+                            <p type="text " class="main-sumary-quotation__input mb-0 month d-lg-flex justify-content-between ">Meses<span class="period"> {{period}}</span></p>
+
+                        </div>
+                        <div class="col-warranty">
+
+                            <p class="main-sumary-quotation__subtitle mb-0 ">Garantía</p>
+
+                            <input *ngIf="showData.warrantyId===1 " class="main-sumary-quotation__input " disabled type="text " value="Sin garantía" />
+                            <input *ngIf="showData.warrantyId===2 " class="main-sumary-quotation__input " disabled type="text " value="Con garantía " />
+                        </div>
+
+                    </div>
+
+                    <div class="row py-lg-2">
+                        <div class="col-disbursement-date">
+
+                            <p class="main-sumary-quotation__subtitle mb-md-0 ">Fecha de desembolso</p>
+
+                            <input type="text " disabled class="main-sumary-quotation__input " disabled value="{{showData.dateDisbursement | date:'dd/MM/yyyy'}} ">
+                        </div>
+                        <div class="col-payday">
+
+                            <p class="main-sumary-quotation__subtitle mb-md-0 ">Día de pago</p>
+
+                            <input type="text " disabled class="main-sumary-quotation__input " disabled value="{{showData.paysDay}} ">
+                        </div>
+                        <div class="col-protection-insurance">
+
+                            <p class="main-sumary-quotation__subtitle mb-md-0 ">Seguro de protección</p>
+
+                            <input type="text " disabled class="main-sumary-quotation__input " disabled value="{{showData.insuranceName | capitalizeFirstLetter}} ">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-tems py-md-2 px-md-4 bg-white main-sumary-quotation__border ">
+                <p class="main-sumary-quotation__title mb-0">4. Tasa de Producto</p>
+                <div class="d-lg-flex pt-lg-5 ">
+                    <div class="col-tem-base">
+                        <p class="main-sumary-quotation__subtitle main-sumary-quotation__subtitle--tem mb-0">TEM Base</p>
+                        <input type="text " class="main-sumary-quotation__input main-sumary-quotation__input--rate-product " disabled value="{{showData.minRate | customAmount }} % ">
+                    </div>
+                    <div class="col-rate">
+                        <p class="main-sumary-quotation__subtitle main-sumary-quotation__subtitle--tem  mb-0 ">TEM Óptima</p>
+                        <input type="text " class="main-sumary-quotation__input main-sumary-quotation__input--rate-product " disabled value="{{showData.optimalRate | customAmount }} % ">
+                    </div>
+                    <div class="col-rate ">
+                        <p class="color-fucsia-danger main-sumary-quotation__subtitle main-sumary-quotation__subtitle--tem 
+                        text-center tem-negotiated mb-0">TEM Negociada</p>
+                        <input type="text " class="main-sumary-quotation__input main-sumary-quotation__input--rate-product 
+                        main-sumary-quotation__input--rate-product-text input-tem-negotiated " disabled value="{{showData.quotedRate | customAmount }} % ">
+                    </div>
+                </div>
+                <div class="col-lg-12 pt-lg-4">
+                    <p class="text-right main-sumary-quotation__subtitle mb-md-0 "> 1° cuota</p>
+                    <p class="text-right main-sumary-quotation__subtitle "> S/ {{showData.firstInstallment | customAmount}}</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div *ngIf="habilytiContentRatePreferential === true" class="py-md-4 px-md-4 mb-md-2 main-sumary-quotation__background ">
+        <p class="main-sumary-quotation__title mb-0 ">5. Solicitud de Tasa Preferencial</p>
+        <div class="row ">
+            <div class="col-md-4 d-md-flex justify-content-md-around ">
+                <div class="col-md-4 d-md-flex align-items-md-center ">
+                    <p class="main-sumary-quotation__subtitle main-sumary-quotation__subtitle--tem-negotiated mb-md-0 text-center">TEM Negociada</p>
+                </div>
+                <div class="col-lg-6 col-xl-5 d-md-flex align-items-md-center ">
+                    <input type="text " disabled class="main-sumary-quotation__input                    
+                    main-sumary-quotation__preferential-rate" value="{{ showData.quotedRate | customAmount }} %">
+                </div>
+            </div>
+            <div class="col-sustentation">
+
+                <p class="main-sumary-quotation__subtitle mb-md-0 ">Indicar sustento correspondiente</p>
+
+                <div class=" ">
+                    <input type="text " disabled class="main-sumary-quotation__input main-sumary-quotation__input--comment " value="{{showData.comment}} ">
+                </div>
+            </div>
+
+            <div class="col-view-files " *ngIf="lengthFiles> 0">
+                <a (click)="filesQuotation()">
+                    <img class="main-sumary-quotation__attach-file cursor-pointer" src="assets/icons/attach_active.png" alt="attach-file" />
+                    <span class="color-fucsia-danger px-md-2 cursor-pointer">Ver archivos adjuntos</span>
+                </a>
+            </div>
+
+            <div class="col-num-files" *ngIf="lengthFiles> 0">
+                <span class="main-sumary-quotation__subtitle main-sumary-quotation__subtitle--attach-file">{{ lengthFiles }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="showData.statusId === 2 || showData.statusId === 3 || showData.statusId === 6 || showData.statusId === 7" class="container-quotation-sumary d-lg-flex ">
+        <div class="col-subtitle-tem-approved ">
+            <p class="subtitle mb-0 ">TEM APROBADA</p>
+        </div>
+        <div class="col-tem-approved">
+            <span class="main-sumary-quotation__tem-approved w-100">{{showData.approvedRate | customAmount}} %</span>
+        </div>
+    </div>
+
+    <div class="py-md-4 px-md-4 mt-md-2 mb-md-2 main-sumary-quotation__background">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row px-md-4">
+                    <div class="col-md-2 d-md-flex align-items-md-center">
+                        <p class="text-right main-sumary-quotation__subtitle mb-md-0">Asesor</p>
+
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text" class="main-sumary-quotation__input text-center" disabled value="{{showData.currentQuoteNameEmployee | uppercase}}">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-2 d-md-flex align-items-md-center">
+                        <p class="text-right main-sumary-quotation__subtitle mb-md-0">Agencia</p>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text" class="main-sumary-quotation__input text-center" disabled value="{{dataOfUser.officeName | uppercase}}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

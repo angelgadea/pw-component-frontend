@@ -1,0 +1,98 @@
+<header class="animated">
+
+    <div *ngIf="pageApprover === true || pageQuoter === true" class="icon-logo">
+        <img class="icon-logo" src="assets/icons/loguito.png" alt="logo">
+    </div>
+
+    <button *ngIf="(dataOfUser.roleName === 'APROBADOR' || 'COTIZADOR') && (routerPathPage === '/quoter-quotation-view' || pageQuotationView === true)" type="button" class="btn btn-arrow-left" (click)="returnPage()">
+        <div class="icon-nav">
+            <img class="image-go-back-left-arrow d-block d-lg-none" src="assets/icons/go_back_left_arrow.png" alt="icon-nav">
+            <img class="icon-logo-modif d-none d-lg-block" src="assets/icons/loguito.png" alt="logo">
+        </div>
+    </button>
+
+
+    <div class="icon-user-header d-lg-none" data-toggle="modal" data-target="#contentModal" (click)="showContent()">
+        <img class="icon-user" src="assets/icons/man_user.png" alt="user">
+    </div>
+
+
+    <div class="icon-user-header d-lg-flex d-none">
+
+        <img class="icon-user" src="assets/icons/man_user_lg.png" alt="user">
+        <span class="user-name-text px-sm-3">{{dataOfUser.employeeName}} {{dataOfUser.employeeFirstSurName}}</span>
+
+        <ul class="nav nav-tabs">
+            <li class="nav-item dropdown " (click)="showContent()">
+                <a class="nav-link dropdown-toggle dropdown-toggle--color" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"></a>
+                <div class="dropdown-menu container-dropdown-menu pb-0">
+                    <p class="dropdown-item text-center">{{dataOfUser.employeeName}} {{dataOfUser.employeeFirstSurName}}</p>
+                    <p class="dropdown-item text-center">{{dataOfUser.roleName}}</p>
+                    <div class="container-options">
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" [routerLink]="['/change-password-on-demand']">Cambio de contraseña</a>
+                        <div class="dropdown-divider"></div>
+                        <p class="dropdown-item mb-0" href="#">Soporte de usuario</p>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item cursor-pointer" (click)="showSignOut()">Cerrar sesión</a>
+                        <div class="dropdown-divider"></div>
+                        <p class="dropdown-item mb-0 dropdown-item-space"></p>
+                    </div>
+
+                </div>
+            </li>
+        </ul>
+
+    </div>
+
+
+</header>
+
+<!-- modal -->
+<div class="modal fade content-modal" id="contentModal" data-backdrop="true" tabindex="-1" role="dialog" aria-labelledby="contentModalLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content modal-container container-table">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="col head">{{dataOfUser.employeeName}}</th>
+                    </tr>
+                    <tr>
+                        <th class="col head-two" *ngIf="dataOfUser.positionId === 1">Asesor</th>
+                        <th class="col head-two" *ngIf="dataOfUser.positionId === 2">Jefe de crédito</th>
+                        <th class="col head-two" *ngIf="dataOfUser.positionId === 3">Gerente de agencia</th>
+                        <th class="col head-two" *ngIf="dataOfUser.positionId === 4">Gerente regional</th>
+                        <th class="col head-two" *ngIf="dataOfUser.positionId === 5">Gerente divisional</th>
+                        <th class="col head-two" *ngIf="dataOfUser.positionId === 6">Gerente de crédito individual</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th class="col body" [routerLink]="['/change-password-on-demand']" data-dismiss="modal">Cambio de clave</th>
+                    </tr>
+                    <tr>
+                        <th class="col body">Soporte a usuarios</th>
+                    </tr>
+                    <tr>
+                        <th class="col body" data-toggle="modal" data-target="#signOutModal" data-dismiss="modal" (click)="showSignOut()">Cerrar sesión</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showConfirm === true" class="modal fade " id="signOutModal" tabindex="-1" role="dialog" aria-labelledby="signOutLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-signout">
+            <div class="modal-body">
+                <label>¿Estás seguro (a) que quieres cerrar sesión?</label>
+                <label>Las cotizaciones no guardadas se perderán.</label>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-yes" data-dismiss="modal" (click)="signOut()">Sí</button>
+                <button class="btn btn-not" data-dismiss="modal" (click)="notSignOut()">No</button>
+            </div>
+        </div>
+    </div>
+</div>

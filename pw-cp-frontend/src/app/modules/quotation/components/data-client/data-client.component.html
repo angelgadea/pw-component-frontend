@@ -1,0 +1,287 @@
+<div class="col-md-auto container-data-client animated d-lg-none">
+    <div class="d-flex">
+        <div class="col mr-2 title-client-off">
+            <h3 class="title-client-off pt-1">Datos del Cliente</h3>
+        </div>
+        <div class="col stepers">
+            <img class="stepers" src="assets/icons/steper_one.png" alt="steper1">
+        </div>
+    </div>
+    <form>
+        <div class="d-flex pt-2">
+            <div class="col mr-2 form-group">
+                <label class="activelc">Documento</label>
+                <select class="form-control activeInputClient" name="doctType" #docId (change)="onDocumentType(docId.value)" [disabled]="disabledDocumentType ? false : true">
+                    <option *ngFor="let document of objDocumentType" value={{document.id}}>
+                        {{document.documentName}}
+                    </option>
+                </select>
+            </div>
+            <label *ngIf="errorNumberValidation === true" class="container-error-document" for="errorMessage">
+                Documento inválido
+            </label>
+            <div class="col-xs form-group" id="errorMessage">
+                <label class="activelc">Número de documento</label>
+                <input class="form-control activeInputClient" [type]="typeInput ? 'number' : 'text' " #numberOfDoc name="numberOfDoc" [disabled]="disabledInputNumberDocument ? false : true" [(ngModel)]="dataClient.numberOfDocument" (keyup)="onDocumentNumber()">
+            </div>
+        </div>
+        <div *ngIf="!clientOfBank" class="col form-group">
+            <button type="button" [disabled]="disabledBtnSearch ? true : false" (click)="onSearchDataClient()" [className]="disabledBtnSearch ? 'col btn btn-search' : 'col btn active-btn-search'">
+                <img *ngIf="disabledBtnSearch === true" class="img" src="assets/icons/search_icon_inactive.png" alt="search">
+                <img *ngIf="disabledBtnSearch === false" class="img" src="assets/icons/search_icon_active.png" alt="search">
+                Buscar Cliente
+            </button>
+        </div>
+        <div *ngIf="loadingClient === true" class="lds-default">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div *ngIf="loadingClient === false">
+            <div *ngIf="dataClient.linkage === 0" class="client-bank d-flex ">
+                <div class="col-xs mr-2 is-client-bank d-flex">
+                    <img src="assets/icons/client_bank.png" class="img-bank" alt="client">
+                    <h3 class="title-bank-client">Cliente</h3>
+                </div>
+                <div class="col form-group">
+                    <label class="label-active">Código cliente</label>
+                    <p class="form-control  activeInputClient" name="bankCode">{{dataClient.customerCode}}</p>
+                </div>
+            </div>
+            <div *ngIf="dataClient.linkage === 1 || dataClient.linkage === null" class="client-bank d-flex pt-2">
+                <div class="col-xs mr-2 is-notclient d-flex">
+                    <img src="assets/icons/no_client_bank.png" class="img-bank" alt="no-client">
+                    <h3 class="title-bank-noclient">No Cliente</h3>
+                </div>
+                <div class="col form-group">
+                    <label class="label-active">Código cliente</label>
+                    <!-- <input class="form-control activeInputClient" disabled type="number" disabled name="notBankCode" required value="{{dataClient.customerCode}}" /> -->
+                    <p class="form-control  activeInputClient" name="notBankCode">{{dataClient.customerCode}}</p>
+                </div>
+            </div>
+            <div class="col form-group">
+                <label [className]="disabledClient ? 'inactivelc' : 'activelc'">Nombre / Razón social del cliente</label>
+                <input *ngIf="dataClient.linkage === 0 || dataClient.linkage === ''" [className]="disabledClient ? 'form-control' : 'form-control activeInputClient'" [disabled]="dataClient ? true : false" type="text" name="businessName" required value="{{dataClient.fullName}}"
+                    [(ngModel)]="dataClient.fullName" (keyup)="setNameClient()" />
+                <input *ngIf="dataClient.linkage === 1 || dataClient.linkage === null" [className]="disabledClient ? 'form-control' : 'form-control activeInputClient'" type="text" name="businessName" required value="{{dataClient.fullName}}" [(ngModel)]="dataClient.fullName"
+                    (keyup)="setNameClient()" />
+            </div>
+
+            <div class="d-flex">
+                <!-- <div class="col-xs mr-2 form-group">
+                    <label [className]="disabledClient ? 'inactivelc' : 'activelc'">Segmento</label>
+                    <input [className]="disabledClient ? 'form-control' : 'form-control activeInputClient'" disabled type="text" name="segment" required value="{{dataClient.segmentName}}" />
+                </div> -->
+
+                <div *ngIf="dataClient.linkage === 0 || dataClient.linkage === ''" class="col form-group">
+                    <label [className]="disabledClient ? 'inactivelc' : 'activelc'">Score</label>
+                    <input [className]="disabledClient ? 'form-control' : 'form-control activeInputClient'" disabled type="text" name="score" #score required value="{{dataClient.score}}">
+                </div>
+                <div *ngIf="dataClient.linkage === 1 || dataClient.linkage === null" class="col form-group">
+                    <label [className]="disabledClient ? 'inactivelc' : 'activelc'">Score</label>
+                    <select [className]="disabledClient ? 'form-control' : 'form-control activeInputClient'" [disabled]="disabledClient ? true : false" name="grossIncome" #scoreId (change)="onSelectScore(scoreId.value)">
+                        <option class="d-none">Elegir</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                    </select>
+                </div>
+            </div>
+
+            <div *ngIf="dataClient.linkage === 0 || dataClient.linkage === ''" class="d-flex">
+                <div class="col-xs mr-2 form-group">
+                    <label [className]="disabledClient ? 'inactivelc' : 'activelc'">Tasa de desembolso anterior</label>
+                    <input [className]="disabledClient ? 'form-control' : 'form-control activeInputClient'" disabled type="text" name="previousOutlayRate" required value="{{dataClient.rate | customAmount}} %">
+                </div>
+
+                <div class="col-xs form-group">
+                    <label [className]="disabledClient ? 'inactivelc' : 'activelc'">Monto de desembolso anterior</label>
+                    <input [className]="disabledClient ? 'form-control' : 'form-control activeInputClient'" disabled type="text" name="previousOutlayAmount" value="{{dataClient.amount | customAmount}}">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Desktop -->
+
+<div class="d-none d-lg-block main-new-quotation">
+
+    <div class="py-lg-3 main-new-quotation__container">
+        <div class="d-lg-flex main-new-quotation__container-inf position-relative">
+
+            <div class="d-flex main-new-quotation__document">
+                <div>
+                    <p class="main-new-quotation__subtitle mb-lg-0">Tipo de documento</p>
+                    <select class="main-new-quotation__select" name="doctType" #docId2 (change)="onDocumentType(docId2.value)" [disabled]="disabledDocumentType ? false : true">
+                        <option *ngFor="let document of objDocumentType" value={{document.id}}>
+                            <span *ngIf="document.id === 1">DNI</span>                 
+                            <span *ngIf="document.id === 2">RUC</span>                       
+                            <span *ngIf="document.id === 4">Carné de Ext.</span>                       
+                            <span *ngIf="document.id === 3">Pasaporte</span>
+                        </option>                   
+                    </select>
+                </div>
+
+                <div class="col-num-doc" id="errorMessage">
+                    <p class="main-new-quotation__subtitle mb-md-0">Número de documento</p>
+                    <input class="main-new-quotation__input" [type]="typeInput ? 'number' : 'text' " #numberOfDoc name="numberOfDoc" [disabled]="disabledInputNumberDocument ? false : true" [(ngModel)]="dataClient.numberOfDocument" (keyup)="onDocumentNumber()">
+                </div>
+            </div>
+
+
+            <label *ngIf="errorNumberValidation === true" class="container-error-document" for="errorMessage">
+                Documento inválido
+            </label>
+
+
+            <div class="d-lg-flex align-items-lg-center justify-content-lg-end pt-lg-3 main-new-quotation__content-buttons">
+                <div class="">
+                    <button class="btn main-new-quotation__btn" type="button" [disabled]="disabledBtnSearch ? true : false" (click)="onSearchDataClient()">Buscar cliente</button>
+                </div>
+
+                <div class="main-new-quotation__btn-cleaner">
+                    <button class="btn main-new-quotation__btn main-new-quotation__btn--cleaner" (click)="cleanNumDoc()"><span class="main-new-quotation__btn-text">Borrar</span></button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div *ngIf="loadingClient === true" class="lds-default">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <div *ngIf="loadingClient === false" class="main-new-quotation__container  main-new-quotation__container--data py-md-4 px-md-4 mt-md-2">
+        <p [className]="disabledClient ? 'main-new-quotation__title main-new-quotation__title--disable' : 'main-new-quotation__title'">1. Datos del Cliente</p>
+
+        <div class="row">
+
+            <div class="d-md-flex align-items-center col-client-img">
+                <div *ngIf="disabledClient" class="main-new_quotation__container-view-default">
+                    <div class="main-new-quotation__container-img main-new-quotation__container-img--disable text-center">
+                        <!-- <img src="assets/icons/client-disabled.png " class="main-new-quotation__client-img " alt="client " /> -->
+                        <p class="main-new-quotation__view-default">POINT</p>
+                    </div>
+                </div>
+
+                <div *ngIf="dataClient.linkage===0 ">
+                    <div class="main-new-quotation__container-img text-center ">
+                        <img src="assets/icons/client_bank.png " class="main-new-quotation__client-img " alt="client " />
+                        <p class="main-new-quotation__client-type text-center mb-md-0 ">Cliente</p>
+                    </div>
+                </div>
+                <div *ngIf="dataClient.linkage===1 || dataClient.linkage===null " class=" ">
+                    <div class="main-new-quotation__container-img main-new-quotation__container-img-no-client text-center ">
+                        <img src="assets/icons/no_client_bank.png " class="main-new-quotation__client-img " alt="no-client " />
+                        <p class="main-new-quotation__client-type main-new-quotation__no-client-type mb-md-0 ">No Cliente</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-data-client">
+
+                <div class="row ">
+
+                    <div class="pb-md-3 col-name-client ">
+                        <p [className]="disabledClient? 'main-new-quotation__subtitle main-new-quotation__subtitle--disable mb-0': 'main-new-quotation__subtitle mb-0' ">Nombre&nbsp;/&nbsp;Razón social del cliente</p>
+
+                        <input *ngIf="dataClient.linkage===0 || dataClient.linkage==='' " class="main-new-quotation__input " [disabled]="dataClient ? true : false
+                        " type="text " name="businessName2" required value="{{dataClient.fullName | uppercase}}" [(ngModel)]="dataClient.fullName " (keyup)="setNameClient() " />
+                        <input *ngIf="dataClient.linkage===1 || dataClient.linkage===null" class="main-new-quotation__input" type="text" name="businessName3
+                        " required value="{{dataClient.fullName | uppercase}}" [(ngModel)]="dataClient.fullName " (keyup)="setNameClient()" />
+                    </div>
+
+                    <div class="col-doc">
+                        <p [className]="disabledClient ? 'main-new-quotation__subtitle main-new-quotation__subtitle--disable mb-0': 'main-new-quotation__subtitle mb-0' ">Documento</p>
+                        <input *ngIf="dataClient.documentId===1 " type="text " [className]="disabledClient ? 'main-new-quotation__input main-new-quotation__input--disable ' : 'main-new-quotation__input' " disabled value="DNI " />
+                        <input *ngIf="dataClient.documentId===2 " type="text " [className]="disabledClient ? 'main-new-quotation__input main-new-quotation__input--disable ' : 'main-new-quotation__input' " disabled value="RUC " />
+                        <input *ngIf="dataClient.documentId===4 " type="text " [className]="disabledClient ? 'main-new-quotation__input main-new-quotation__input--disable ' : 'main-new-quotation__input' " disabled value="Carné de Ext." />
+                        <input *ngIf="dataClient.documentId===3 " type="text " [className]="disabledClient ? 'main-new-quotation__input main-new-quotation__input--disable ' : 'main-new-quotation__input' " disabled value="Pasaporte" />
+
+                    </div>
+                    <div class="col-num-document">
+                        <p [className]="disabledClient ? 'main-new-quotation__subtitle main-new-quotation__subtitle--disable mb-0': 'main-new-quotation__subtitle mb-0' ">Número de documento</p>
+                        <input type="text " [className]="disabledClient ? 'main-new-quotation__input main-new-quotation__input--disable ' : 'main-new-quotation__input' " disabled value="{{ dataClient.numberOfDocument }} " />
+                    </div>
+
+                </div>
+
+                <div class="">
+                    <div class="row ">
+                        <div class="row col-client-seg-score ">
+                            <div class="col-cod-client ">
+                                <p [className]="disabledClient? 'main-new-quotation__subtitle main-new-quotation__subtitle--disable mb-0 ': 'main-new-quotation__subtitle mb-0' ">Código cliente</p>
+                                <div type="text " [className]="disabledClient ? 'main-new-quotation__input main-new-quotation__input--disable px-0' : '' ">
+                                    <p [className]="dataClient.linkage === null ? 'bg-client bg-client--no-client': 'bg-client'">{{dataClient.customerCode }}</p>
+                                </div>
+                            </div>
+                            <div class=" col-seg ">
+                                <p [className]="disabledClient? 'main-new-quotation__subtitle main-new-quotation__subtitle--disable mb-0': 'main-new-quotation__subtitle mb-0' ">Segmento</p>
+                                <p type="text " [className]="disabledClient ? 'main-new-quotation__input main-new-quotation__input--disable ' : 'main-new-quotation__input ' ">
+                                    <span *ngIf="dataClient.segmentName !==null " class="main-new-quotation__name-seg "> {{ dataClient.segmentName }}</span>
+                                    <span *ngIf="dataClient.segmentName ===null " class="main-new-quotation__name-seg "> NA</span>
+                                </p>
+
+                            </div>
+
+                            <div class="col-score ">
+                                <p [className]="disabledClient? 'main-new-quotation__subtitle main-new-quotation__subtitle--disable mb-0 ': 'main-new-quotation__subtitle mb-0' ">Score</p>
+                                <input *ngIf="disabledClient " [className]="disabledClient ? 'main-new-quotation__input main-new-quotation__input--disable ' : 'main-new-quotation__input ' " disabled value="{{ dataClient.score }} " />
+
+                                <input *ngIf="dataClient.linkage===0 || dataClient.linkage===' ' " type="text " class="main-new-quotation__input " disabled value="{{ dataClient.score }} " />
+                                <select *ngIf="dataClient.linkage===1 || dataClient.linkage===null " [className]="disabledClient ? 'main-new-quotation__select--disabled main-new-quotation__select ' : 'main-new-quotation__select ' " [disabled]="disabledClient
+                                    ? true : false " name="grossIncome " #scoreId2 (change)="onSelectScore(scoreId2.value) ">
+                            <option class="d-none ">Elegir</option>
+                            <option value="A ">A</option>
+                            <option value="B ">B</option>
+                            <option value="C ">C</option>
+                            <option value="D ">D</option>
+                            <option value="E ">E</option>
+                            <option value="F ">F</option>
+                        </select>
+                            </div>
+                        </div>
+
+
+                        <div *ngIf="dataClient.linkage===0 || dataClient.linkage==='' " class="d-flex col-rates ">
+                            <div class="col-preview-rate ">
+                                <p [className]="disabledClient? 'main-new-quotation__subtitle main-new-quotation__subtitle--disable mb-0': 'main-new-quotation__subtitle mb-0' ">Tasa anterior</p>
+                                <input type="text " [className]="disabledClient ? 'main-new-quotation__input main-new-quotation__input--disable ' : 'main-new-quotation__input ' " disabled value="{{dataClient.rate | customAmount}} % ">
+                            </div>
+
+                            <div class="col-preview-amount ">
+                                <p [className]="disabledClient? 'main-new-quotation__subtitle main-new-quotation__subtitle--disable mb-0': 'main-new-quotation__subtitle mb-0' ">Monto anterior</p>
+                                <input type="text " [className]="disabledClient ? 'main-new-quotation__input main-new-quotation__input--disable ' : 'main-new-quotation__input ' " disabled value="S/ {{dataClient.amount | customAmount}} ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,128 @@
+@font-face {
+    font-family: titilliumweb-regular;
+    src: url(../../../../assets/fonts/TitilliumWeb-Regular.ttf);
+}
+
+@font-face {
+    font-family: ubuntu-light;
+    src: url(../../../../assets/fonts/Ubuntu-Light.ttf);
+}
+
+@font-face {
+    font-family: ubuntu-regular;
+    src: url(../../../../assets/fonts/Ubuntu-Regular.ttf);
+}
+
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.fast {
+    -webkit-animation-duration: 0.4s;
+    animation-duration: 0.4s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    animation-name: fadeIn;
+}
+
+@media (min-width: 300px) {
+    .main-logo {
+        max-width: 75px;
+        height: auto;
+    }
+    .main-logo__brand {
+        font-family: ubuntu-normal, Arial, Helvetica, sans-serif;
+        font-size: 50px;
+        letter-spacing: 8px;
+        color: #333333;
+    }
+    .main-logo__slogan {
+        font-family: titilliumweb-regular, Arial, Helvetica, sans-serif;
+        font-size: 11px;
+        letter-spacing: -0.5px;
+        color: #CA005D;
+    }
+    .line {
+        max-width: 200px;
+        background: #CA005D;
+    }
+}
+
+@media(min-width:768px) {
+    .main-logo {
+        max-width: 125px;
+        height: auto;
+    }
+    .line {
+        max-width: 390px;
+    }
+    .main-logo__brand {
+        font-weight: normal;
+        font-family: ubuntu-regular, Arial, Helvetica, sans-serif;
+        font-size: 82px;
+        letter-spacing: 37px;
+        color: #333333;
+    }
+    .main-logo__slogan {
+        font-size: 24px;
+    }
+}
+
+@media(min-width:992px) {
+    .main-logo {
+        max-width: 130px;
+        height: auto;
+    }
+    .main-logo__brand {
+        font-family: ubuntu-light, Arial, Helvetica, sans-serif;
+        font-size: 90px;
+        font-weight: 300;
+        letter-spacing: 32px;
+    }
+    .main-logo__slogan {
+        color: #CA005D;
+        padding-left: 1%;
+        font-size: 24px;
+        line-height: 16px;
+    }
+    .main-logo__line {
+        border-left: 0.5px solid #999999;
+        height: 340px;
+        position: absolute;
+        left: 105%;
+        top: -90px;
+    }
+    .container-brand-slogan {
+        float: left;
+        left: -70px;
+    }
+    @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+        .main-logo {
+            max-width: 100px;
+            height: auto;
+        }
+        .main-logo__brand {
+            font-size: 65px;
+            font-weight: 300;
+            letter-spacing: 25px;
+        }
+        .main-logo__slogan {
+            font-size: 18px;
+        }
+    }
+}

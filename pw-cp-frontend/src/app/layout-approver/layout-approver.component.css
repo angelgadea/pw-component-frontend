@@ -1,0 +1,12 @@
+.header {
+    position: fixed;
+    z-index: 40;
+    width: 100%;
+    top: 0;
+}
+
+.container-approver {
+    position: relative;
+    top: 78px;
+    background-color: #E5E5E5;
+}

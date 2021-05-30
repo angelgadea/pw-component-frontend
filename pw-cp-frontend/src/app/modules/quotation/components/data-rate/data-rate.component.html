@@ -1,0 +1,196 @@
+<div class="col-md-auto container-data animated ">
+    <div class="d-flex">
+        <div class="col mr-2 pt-1 title-rate-off d-lg-none d-block">
+            <h3 [className]="disabledRate ? 'title-on' : 'title-rate-off'">
+                Tasa de Producto
+            </h3>
+        </div>
+        <div class="col mr-2 pt-1 title-rate-off d-lg-block d-none">
+            <h3 [className]="disabledRate ? 'title-on' : 'title-rate-off'">
+                4. Tasa de Producto
+            </h3>
+        </div>
+
+        <div class="col stepers d-lg-none d-block">
+            <img *ngIf="disabledRate ? true : false" class="stepers" src="assets/icons/steper_four_inactive.png" alt="steper-four-inactive" />
+            <img *ngIf="disabledRate ? false : true" class="stepers" src="assets/icons/steper_four.png" alt="steper-four-active" />
+        </div>
+    </div>
+    <form>
+        <div class="container-rate">
+            <div class="d-flex justify-content-around align-items-start">
+                <div class="pr-1">
+                    <p [className]="disabledRate ? 'inactivelr' : 'activelr'">TEM Base</p>
+                    <div [className]="disabledRate ? 'px-4 pt-3 pb-3 input-rate-min' : ' px-4 pt-3 pb-3 active-input-rate'"><span>{{dataRate.minRate}}%</span></div>
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                        <span [className]="disabledRate ? 'inactivelr' : 'activelr'">1° cuota</span>
+                        <span [className]="disabledRate ? 'inactivelr' : 'activelr'">S/ {{firstMinRate |customAmount}}</span>
+                    </div>
+                </div>
+                <div class="px-1">
+                    <p [className]="disabledRate ? 'inactivelr' : 'activelr'">TEM Óptima</p>
+                    <div [className]="disabledRate ? 'px-4 pt-3 pb-3 input-rate-min' : 'px-4 pt-3 pb-3 active-input-rate'"><span>{{dataRate.optimalRate}}%</span></div>
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                        <span [className]="disabledRate ? 'inactivelr' : 'activelr'">1° cuota</span>
+                        <span [className]="disabledRate ? 'inactivelr' : 'activelr'">S/ {{firstOptimalRates | customAmount}}</span>
+                    </div>
+                </div>
+
+
+                <div class="d-flex flex-column align-items-center">
+                    <p [className]="disabledRate ? 'inactivelr' : 'active-label-rate-agreed'" [id]="errorMaxRate ?
+                    'error-max-rate-label' : ''">TEM Negociada</p>
+                    <div>
+                        <span [className]="disabledRate ? 'inactivelr symbol-tem' : 'activelr symbol-tem'">%</span>
+                        <input type="text" [className]="disabledRate ? 'form-control input-rate-agreed p-0' : 'form-control 
+                        active-input-rate-agreed-rate'" [id]="errorMaxRate || errorMinRate ? 'error-max-rate' :
+                        ''" [disabled]="disabledRate ? true : false" name="agreedRate" [(ngModel)]="dataRate.rateAgreed" (keyup)="onShowBtnSaveQuotation()">
+                    </div>
+                    <div [ngStyle]="{'visibility': checkboxRate === false ? 'hidden' : 'visible'}" class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="customSwitches" (change)="onShowFirstInstallment($event)">
+                        <label [className]="disabledRate ? 'custom-control-label inactivelr' : 'custom-control-label activelr'" for="customSwitches">1°cuota</label>
+                        <label [className]="disabledRate ? 'inactivelr m-0 tem-negotiated-first-quote' : 'activelr m-0 tem-negotiated-first-quote'"><span class="pl-2">S/ </span>{{dataRate.installment | customAmount}}</label>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="errorMaxRate === true" class="container-error-rate-agreed">
+                La tasa ingresada es mayor a la tasa máxima.
+            </div>
+            <div *ngIf="errorMinRate === true" class="container-error-rate-agreed">
+                La tasa ingresada es menor a la tasa mínima.
+            </div>
+
+
+            <div *ngIf="validateTem === true" class="container-error-tem-negociated">
+
+                Tasa inválida.
+
+            </div>
+
+            <div class="col-md-8 form-group btn-save">
+                <button type="button" data-toggle="modal" data-target="#saveQuotation" [className]="disabledBtnSaveQuotation ? 'col form-control
+                         btn btn-save-quotation' : 'col form-control btn offBtn'" (click)="onQueryApprovalLevel()" [disabled]="disabledBtnSaveQuotation ? true : false">
+                    <img *ngIf="disabledBtnSaveQuotation ? false : true" class="img"
+                        src="assets/icons/save_rate_active.png" alt="save-rate-inactive" />
+                    <img *ngIf="disabledBtnSaveQuotation ? true : false" class="img"
+                        src="assets/icons/save_rate_inactive.png" alt="save-rate-active" />
+                    Guardar y enviar cotización
+                </button>
+            </div>
+            <div class="modal fade" id="saveQuotation" data-backdrop="true" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <p *ngIf="dataRate.approvalLevel === 1">Nivel de aprobación: Jefe de crédito</p>
+                            <p *ngIf="dataRate.approvalLevel === 2">Nivel de aprobación: Gerente de agencia</p>
+                            <p *ngIf="dataRate.approvalLevel === 3">Nivel de aprobación: Gerente regional</p>
+                            <p *ngIf="dataRate.approvalLevel === 4">Nivel de aprobación: Gerente divisional</p>
+                            <p *ngIf="dataRate.approvalLevel === 5">Nivel de aprobación: Gerente de crédito individual</p>
+                        </div>
+                        <div class="modal-body">
+                            <p class="body-title">Tu cotización será enviada al jefe de crédito</p>
+                            <p class="body-subtitle">¿Deseas continuar?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-yes" data-dismiss="modal" (click)="onSaveNewQuotationAutonomy()">Sí</button>
+                            <button type="button" class="btn btn-not" data-dismiss="modal" [routerLink]="['/quote/new-quotation']">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!-- <div [className]="enabledContentRatePreferential ? 'col-md-auto mt-2 container-data-preferential' : 'col-md-auto mt-2 none-container-data' ">
+    <div class="d-flex mt-3 ">
+        <div class="col title-client-off ">
+            <h3 class="title-client-off pt-1 ">
+                Solicitud de Tasa Preferencial
+            </h3>
+        </div>
+        <div class="col stepers ">
+            <img class="stepers " src="assets/icons/steper_five.png " alt="steper-five-active " />
+        </div>
+    </div>
+    <form>
+        <div class="mt-4 container-rate-referential ">
+            <div class="d-flex align-items-center ">
+                <div class="mr-4 ">
+                    <h3 class="title-referential ">TEM Negociada</h3>
+                </div>
+                <div class="col form-group right-value ">
+                    <input class="form-control input-rate-referential " type="text " name="dateRateAgreed " disabled value="{{dataRate.rateAgreed}} % " />
+                </div>
+            </div>
+            <div class="col-xs form-group ">
+                <label class="comment ">Indicar sustento correspondiente</label>
+                <textarea class="form-control textarea " rows="5 " [(ngModel)]="dataRate.commentRatePreferential " name="comment " #comment="ngModel " (keyup)="onRatePreferential() "></textarea>
+            </div>
+
+            <label *ngIf="showErrorSize===t rue " class="container-error-attach " for="file ">
+              El tamaño máximo es de 5MB por archivo.
+            </label>
+
+            <label *ngIf="showDuplicateError===t rue " class="container-error-attach " for="file ">
+                No puedes adjuntar archivos repetidos.
+              </label>
+
+            <label *ngIf="errorMaximumNumberFile===t rue " class="container-error-attach " for="file ">
+                Sólo puedes adjuntar un máximo de 5 archivos.
+             </label>
+
+            <div class="col-xs mt-2 attach-file ">
+                <label class="btn btn-file d-flex ">
+                <img class="img-attach-file mb-1 " src="assets/icons/attach_active.png " alt="img-enlace ">
+                <a class="attach-file__title ml-1 ">Adjuntar archivo</a>
+                <input type="file " accept="image/jpg, image/jpeg, ,image/png, application/pdf "
+                (click)="file.value=n ull "
+                class="myfile d-none " id="file " #file name="myfile " [disabled]="disabledAttachFile ? true : false " (change)="attachDataFile($event.target.files) " multiple />
+                <div class="border-num-files ">
+                    <span class=" ">{{quantityFile}}</span>
+                </div>
+                </label>
+            </div>
+
+            <div *ngFor="let list of listDataFiles " class=" ">
+                <p>{{list.name}}<button type="button " class="btn p-0 " (click)="deleteFile(list.name) "><img class="mx-4 " src="assets/icons/cancel.png "
+                    alt="cancel " /></button></p>
+            </div>
+
+            <div class="col mt-2 form-group ">
+                <button [className]="disabledBtnSendRequest ? 'col btn btn-send-request' : 'col btn offBtn' " type="button " data-toggle="modal " data-target="#sendRequest " (click)="onQueryApprovalLevel() " [disabled]="disabledBtnSendRequest ? true
+                : false ">
+                    <img *ngIf="disabledBtnSendRequest===t rue " class="img " src="assets/icons/save_rate_inactive.png "
+                        alt="save-rate-inactive " />
+                    <img *ngIf="disabledBtnSendRequest===f alse " class="img " src="assets/icons/save_rate_active.png "
+                        alt="save-rate-active " />
+                    Guardar y Enviar Solicitud
+                </button>
+            </div>
+            <div class="modal fade " id="sendRequest " data-backdrop="true " tabindex="-1 " role="dialog " aria-labelledby="exampleModalLabel " aria-hidden="true ">
+                <div class="modal-dialog " role="document ">
+                    <div class="modal-content ">
+                        <div class="d-flex modal-header ">
+                            <p *ngIf="dataRate.approvalLevel===1 ">Nivel de aprobación: Jefe de crédito</p>
+                            <p *ngIf="dataRate.approvalLevel===2 ">Nivel de aprobación: Gerente de agencia</p>
+                            <p *ngIf="dataRate.approvalLevel===3 ">Nivel de aprobación: Gerente regional</p>
+                            <p *ngIf="dataRate.approvalLevel===4 ">Nivel de aprobación: Gerente divisional</p>
+                            <p *ngIf="dataRate.approvalLevel===5 ">Nivel de aprobación: Gerente de crédito individual</p>
+                        </div>
+                        <div class="modal-body ">
+                            <p class="body-title ">Tu cotización será enviada al jefe de crédito</p>
+                            <p class="body-subtitle ">¿Deseas continuar?</p>
+                        </div>
+                        <div class="modal-footer ">
+                            <button class="btn btn-yes " data-dismiss="modal " data-toggle="modal " (click)="onSaveNewQuotationPreferential() ">Sí</button>
+                            <button class="btn btn-not " data-dismiss="modal " [routerLink]="[ '/quote/new-quotation'] ">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div> -->

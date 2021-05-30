@@ -1,0 +1,24 @@
+<div class="layout-quoter d-block d-lg-none ">
+    <div class="container-header animated">
+        <app-header></app-header>
+        <app-nav-quote-display-page class="animated"></app-nav-quote-display-page>
+        <app-header-container *ngIf="loadingQuoteSummary === false" class="animated fadeIn"></app-header-container>
+    </div>
+    <div class="container-quoter animated">
+        <app-quoter-quotation-view class="animated fadeIn"></app-quoter-quotation-view>
+    </div>
+</div>
+
+<div class="layout-quoter d-none d-lg-block position-relative">
+    <div class="container-header animated">
+        <app-header></app-header>
+        <app-nav-quote-display-page class="animated"></app-nav-quote-display-page>
+    </div>
+
+    <div class="container-quoter animated">
+        <app-header-container *ngIf="loadingQuoteSummary === false" class="animated fadeIn"></app-header-container>
+        <app-quoter-quotation-view class="animated fadeIn"></app-quoter-quotation-view>
+    </div>
+</div>
+
+<app-footer *ngIf="loadingQuoteSummary === false" class="animated fadeIn"></app-footer>

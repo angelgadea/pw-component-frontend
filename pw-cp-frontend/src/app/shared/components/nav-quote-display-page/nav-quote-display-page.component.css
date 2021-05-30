@@ -1,0 +1,120 @@
+ @font-face {
+     font-family: titilliumweb-regular;
+     src: url(../../../../assets/fonts/TitilliumWeb-Regular.ttf);
+ }
+ 
+ .animated {
+     -webkit-animation-duration: 1s;
+     animation-duration: 1s;
+     -webkit-animation-fill-mode: both;
+     animation-fill-mode: both;
+ }
+ 
+ .fast {
+     -webkit-animation-duration: 0.4s;
+     animation-duration: 0.4s;
+     -webkit-animation-fill-mode: both;
+     animation-fill-mode: both;
+ }
+ 
+ @keyframes fadeIn {
+     from {
+         opacity: 0;
+     }
+     to {
+         opacity: 1;
+     }
+ }
+ 
+ .fadeIn {
+     animation-name: fadeIn;
+ }
+ 
+ @media (min-width: 300px) {
+     .container-two-header {
+         width: 100%;
+     }
+     .barra-nav {
+         height: 85px;
+         background: #C0C0C0;
+     }
+     .button-nav {
+         width: 170px;
+         height: 55px;
+         background: #CA005D;
+         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+         border-radius: 20px;
+         margin: 10px;
+     }
+     .btn-new-quotation,
+     .btn-quotes-tray {
+         font-family: titilliumweb-regular, Arial, Helvetica, sans-serif;
+         font-style: normal;
+         font-weight: bold;
+         font-size: 18px;
+         line-height: 18px;
+         display: flex;
+         align-items: center;
+         text-align: center;
+         color: #FFFFFF;
+         box-shadow: none;
+         border: none;
+         padding: 10px;
+     }
+     .button-nav__approver {
+         height: 55px;
+         background: #CA005D;
+         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+         border-radius: 20px;
+         margin: 10px;
+     }
+     .btn-quotes-tray__approver {
+         font-family: titilliumweb-regular, Arial, Helvetica, sans-serif;
+         font-style: normal;
+         font-weight: bold;
+         font-size: 18px;
+         line-height: 18px;
+         display: flex;
+         align-items: center;
+         text-align: center;
+         color: #FFFFFF;
+         box-shadow: none;
+         border: none;
+         margin: auto;
+         padding-top: 18px;
+     }
+ }
+ 
+ @media(min-width:992px) {
+     .barra-nav {
+         position: absolute;
+         float: left;
+         left: 156px;
+         top: -3px;
+         background-color: #ce0058;
+     }
+     .button-nav {
+         background-color: #FFA100;
+         border-radius: 10px;
+     }
+     .button-nav__approver {
+         background: #FFA100;
+         border-radius: 10px;
+     }
+     .btn-new-quotation,
+     .btn-quotes-tray,
+     .btn-quotes-tray__approver {
+         font-size: 20px;
+     }
+     .button-nav {
+         width: 250px;
+         display: flex;
+         justify-content: center;
+     }
+ }
+ 
+ @media(min-width:1200px) {
+     .barra-nav {
+         left: 210px;
+     }
+ }

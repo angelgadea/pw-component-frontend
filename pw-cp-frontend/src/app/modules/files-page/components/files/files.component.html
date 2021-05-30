@@ -1,0 +1,57 @@
+<div class="container-view-attach-file">
+    <img class="icon-logo d-none d-lg-block logo" src="assets/icons/loguito.png" alt="icon-landscape" />
+    <div class="container-header d-lg-block d-none animated">
+        <app-header></app-header>
+    </div>
+    <app-header-nav class="container-header-nav"></app-header-nav>
+
+    <div *ngIf="loadingFilePage === true" class="lds-default">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+
+    <div *ngIf="loadingFilePage === false" class="container-file-list">
+        <div class="w-100 position-relative header-attach-file animated fadeIn">
+            <p class="py-2 py-lg-4 mb-lg-0 header-attach-file__item">Archivos adjuntos - Cotización: ID {{quotationId}}</p>
+        </div>
+        <div class="animated content-attach-file fadeIn px-4 d-flex align-items-center justify-content-around" *ngFor="let file of dataFiles">
+            <div>
+                <img class="mx-2 icon-landscape d-none d-lg-block" src="assets/icons/landscape.png" alt="icon-landscape" />
+            </div>
+            <div class="mt-2 col-xs w-100">
+                <button type="button" class="btn content-attach-file__item" (click)="imagenShow(file.id)" data-toggle="modal" data-target="#exampleModalCenter">
+                <label class="file-name">{{file.nameDocument}}</label>
+            </button>
+            </div>
+            <div>
+                <a href="{{ApiUrl}}{{file.nameDocument}}"><img class="mx-2 icon-download" src="assets/icons/download.png" alt="icon-download" /></a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- modal imagen -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" data-backdrop="false" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+                <div class="modal-body">
+                    <img class="imagenFileShow" src="{{ApiUrl}}{{imageFile}}" alt="{{documentName}}" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
